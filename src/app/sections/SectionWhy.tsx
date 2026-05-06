@@ -4,7 +4,6 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// Desktop line breaks from Figma (4 sentences, one per line)
 const DESKTOP_LINES = [
   "강냉이.com은 CAD/CAM 기반으로 작업하는 디지털 기공소입니다.",
   "10년 동안 구강스캔을 활용한 모델리스 보철을 10,000건 이상 제작해왔고,",
@@ -12,7 +11,6 @@ const DESKTOP_LINES = [
   "치과와의 소통을 가장 중요하게 생각하며, 더 좋은 결과를 위해 매 케이스 최선을 다합니다.",
 ];
 
-// Mobile line breaks from Figma (narrower wrapping)
 const MOBILE_LINES = [
   "강냉이.com은 CAD/CAM 기반으로",
   "작업하는 디지털 기공소입니다.",
@@ -50,7 +48,6 @@ export default function SectionWhy() {
 
     const mm = gsap.matchMedia();
 
-    // Desktop
     mm.add("(min-width: 768px)", () => {
       const words = sectionRef.current!.querySelectorAll("[data-desktop-word]");
       gsap.fromTo(
@@ -58,19 +55,20 @@ export default function SectionWhy() {
         { color: "rgba(255,255,255,0.15)" },
         {
           color: "rgba(255,255,255,1)",
-          stagger: 0.05,
+          stagger: 0.1,
           ease: "none",
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top 60%",
-            end: "bottom 40%",
-            scrub: 1.5,
+            start: "top top",
+            end: "+=2500",
+            pin: true,
+            scrub: 1,
+            anticipatePin: 1,
           },
         }
       );
     });
 
-    // Mobile
     mm.add("(max-width: 767px)", () => {
       const words = sectionRef.current!.querySelectorAll("[data-mobile-word]");
       gsap.fromTo(
@@ -78,13 +76,15 @@ export default function SectionWhy() {
         { color: "rgba(255,255,255,0.15)" },
         {
           color: "rgba(255,255,255,1)",
-          stagger: 0.05,
+          stagger: 0.1,
           ease: "none",
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top 60%",
-            end: "bottom 40%",
-            scrub: 1.5,
+            start: "top top",
+            end: "+=2500",
+            pin: true,
+            scrub: 1,
+            anticipatePin: 1,
           },
         }
       );
@@ -98,17 +98,16 @@ export default function SectionWhy() {
       ref={sectionRef}
       className="bg-[#1c1c19] flex flex-col items-center justify-center text-center gap-12 px-5 md:px-8 min-h-screen"
     >
-      {/* Title */}
       <h2 className="font-display text-[32px] md:text-[56px] text-white tracking-[-0.03em] leading-[1.2] w-full">
         Why 강냉이.com
       </h2>
 
-      {/* Desktop body — hidden on mobile */}
+      {/* Desktop */}
       <p className="hidden md:block font-sans font-medium text-[32px] leading-[1.6] tracking-[-0.03em] w-full">
         {buildWordSpans(DESKTOP_LINES, "data-desktop-word")}
       </p>
 
-      {/* Mobile body — hidden on desktop */}
+      {/* Mobile */}
       <p className="md:hidden font-sans font-medium text-[20px] leading-[1.6] tracking-[-0.03em] w-full">
         {buildWordSpans(MOBILE_LINES, "data-mobile-word")}
       </p>
