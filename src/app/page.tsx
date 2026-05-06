@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 
-const arrowIcon    = "https://www.figma.com/api/mcp/asset/532170e6-1acb-484c-8b20-be238534f18f";
 const hamburgerIcon = "https://www.figma.com/api/mcp/asset/e3ea4b46-101d-4ad4-a281-db809207dca4";
 
 export default function Home() {
@@ -33,7 +32,7 @@ export default function Home() {
           <div className="mt-auto">
             <button className="w-full h-12 bg-[#ecc744] rounded-xl flex items-center justify-center gap-1 font-sans font-medium text-base text-[#1c1c19] tracking-[-0.02em]">
               비즈니스 제휴 문의
-              <img src={arrowIcon} alt="" className="w-5 h-5" />
+              →
             </button>
           </div>
         </div>
@@ -76,7 +75,7 @@ export default function Home() {
             <div className="hidden md:block w-[215px]">
               <button className="w-full h-12 bg-[#ecc744] rounded-xl flex items-center justify-center gap-1 font-sans font-medium text-base text-[#1c1c19] tracking-[-0.02em]">
                 비즈니스 제휴 문의
-                <img src={arrowIcon} alt="" className="w-5 h-5" />
+                →
               </button>
             </div>
 
