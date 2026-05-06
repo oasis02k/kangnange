@@ -3,6 +3,7 @@
 import { useState } from "react";
 import SectionWhy from "./sections/SectionWhy";
 import SectionServices from "./sections/SectionServices";
+import SectionWorkflow from "./sections/SectionWorkflow";
 
 
 
@@ -127,6 +128,7 @@ export default function Home() {
 
       <SectionWhy />
       <SectionServices />
+      <SectionWorkflow />
     </>
   );
 }
