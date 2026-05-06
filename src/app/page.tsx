@@ -40,10 +40,24 @@ export default function Home() {
       )}
 
       {/* ── Hero section ── */}
-      <section className="relative bg-[#1c1c19] flex flex-col justify-end min-h-svh">
+      <section className="relative bg-[#1c1c19] flex flex-col justify-end min-h-svh overflow-hidden">
+
+        {/* Background video */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src="/hero-video.mp4" type="video/mp4" />
+        </video>
+
+        {/* Dark overlay so text stays readable */}
+        <div className="absolute inset-0 bg-[#1c1c19]/60" />
 
         {/* Navbar — absolute so it overlays the hero */}
-        <header className="absolute top-0 left-0 right-0 z-10 h-20 bg-[#1c1c19] border-b border-white/[0.32] overflow-hidden">
+        <header className="absolute top-0 left-0 right-0 z-20 h-20 bg-transparent border-b border-white/[0.32] overflow-hidden">
           <div className="flex items-center justify-between h-full px-5 md:px-8">
 
             {/* Logo */}
@@ -78,8 +92,8 @@ export default function Home() {
           </div>
         </header>
 
-        {/* Hero content — pinned to bottom */}
-        <div className="flex flex-col gap-4 px-5 md:px-8 pb-8 md:pb-24">
+        {/* Hero content — pinned to bottom, above overlay */}
+        <div className="relative z-10 flex flex-col gap-4 px-5 md:px-8 pb-8 md:pb-24">
 
           {/* Heading: 28px mobile → 56px desktop */}
           <h1 className="font-display text-[28px] md:text-[56px] text-[#f5f5f5] tracking-[-0.03em] leading-[1.2] whitespace-pre-wrap">
