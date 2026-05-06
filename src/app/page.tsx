@@ -10,7 +10,7 @@ export default function Home() {
     <>
       {/* ── Mobile full-screen menu overlay ── */}
       {menuOpen && (
-        <div className="fixed inset-0 z-50 bg-[#1c1c19] flex flex-col px-5 pt-6 pb-10">
+        <div className="fixed inset-0 z-50 bg-[#0B0B0C] flex flex-col px-5 pt-6 pb-10">
           <div className="flex items-center justify-between mb-12">
             <a href="#" className="font-display text-2xl text-[#ecc744] tracking-[-0.03em] leading-none">
               강냉이.com
@@ -60,7 +60,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-[#1c1c19]/60" />
 
         {/* Navbar — absolute so it overlays the hero */}
-        <header className="absolute top-0 left-0 right-0 z-20 h-20 bg-transparent border-b border-white/[0.32] overflow-hidden">
+        <header className="absolute top-0 left-0 right-0 z-20 h-20 bg-[#0B0B0C] border-b border-white/[0.32] overflow-hidden">
           <div className="flex items-center justify-between h-full px-5 md:px-8">
 
             {/* Logo */}
