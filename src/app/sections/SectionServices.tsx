@@ -34,7 +34,7 @@ const SERVICES = [
 export default function SectionServices() {
   return (
     <section className="bg-[#f5f5f5] py-8 md:py-24 px-5 md:px-8">
-      <div className="flex flex-col gap-6 md:gap-12 items-center w-full">
+      <div className="flex flex-col gap-6 md:gap-12 items-center w-full max-w-[1440px] mx-auto">
 
         {/* Heading */}
         <div className="flex flex-col gap-2 md:gap-4 text-center w-full">

@@ -96,21 +96,23 @@ export default function SectionWhy() {
   return (
     <section
       ref={sectionRef}
-      className="bg-[#1c1c19] flex flex-col items-center justify-center text-center gap-12 px-5 md:px-8 min-h-screen"
+      className="bg-[#1c1c19] flex flex-col items-center justify-center min-h-screen px-5 md:px-8"
     >
-      <h2 className="font-display text-[32px] md:text-[56px] text-white tracking-[-0.03em] leading-[1.2] w-full">
-        Why 강냉이.com
-      </h2>
+      <div className="flex flex-col gap-12 text-center w-full max-w-[1440px] mx-auto">
+        <h2 className="font-display text-[32px] md:text-[56px] text-white tracking-[-0.03em] leading-[1.2] w-full">
+          Why 강냉이.com
+        </h2>
 
-      {/* Desktop */}
-      <p className="hidden md:block font-sans font-medium text-[32px] leading-[1.6] tracking-[-0.03em] w-full">
-        {buildWordSpans(DESKTOP_LINES, "data-desktop-word")}
-      </p>
+        {/* Desktop */}
+        <p className="hidden md:block font-sans font-medium text-[32px] leading-[1.6] tracking-[-0.03em] w-full">
+          {buildWordSpans(DESKTOP_LINES, "data-desktop-word")}
+        </p>
 
-      {/* Mobile */}
-      <p className="md:hidden font-sans font-medium text-[20px] leading-[1.6] tracking-[-0.03em] w-full">
-        {buildWordSpans(MOBILE_LINES, "data-mobile-word")}
-      </p>
+        {/* Mobile */}
+        <p className="md:hidden font-sans font-medium text-[20px] leading-[1.6] tracking-[-0.03em] w-full">
+          {buildWordSpans(MOBILE_LINES, "data-mobile-word")}
+        </p>
+      </div>
     </section>
   );
 }
