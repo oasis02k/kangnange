@@ -108,7 +108,7 @@ export default function Home() {
           {/* CTA: full-width mobile → 215px desktop */}
           <button className="mt-2 w-full md:w-[215px] h-12 bg-[#ecc744] rounded-xl flex items-center justify-center gap-1 font-sans font-medium text-base text-[#1c1c19] tracking-[-0.02em]">
             비즈니스 제휴 문의
-            <img src={arrowIcon} alt="" className="w-5 h-5" />
+            →
           </button>
 
         </div>
