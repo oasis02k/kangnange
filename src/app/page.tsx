@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import SectionWhy from "./sections/SectionWhy";
 
 
 
@@ -122,6 +123,8 @@ export default function Home() {
 
         </div>
       </section>
+
+      <SectionWhy />
     </>
   );
 }
