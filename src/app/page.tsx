@@ -6,6 +6,7 @@ import SectionServices from "./sections/SectionServices";
 import SectionWorkflow from "./sections/SectionWorkflow";
 import SectionTestimonial from "./sections/SectionTestimonial";
 import SectionCases from "./sections/SectionCases";
+import SectionEquipment from "./sections/SectionEquipment";
 
 
 
@@ -133,6 +134,7 @@ export default function Home() {
       <SectionWorkflow />
       <SectionTestimonial />
       <SectionCases />
+      <SectionEquipment />
     </>
   );
 }
