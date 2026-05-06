@@ -65,7 +65,7 @@ export default function SectionTestimonial() {
                 <div className="flex items-center gap-2 flex-1 min-w-0">
                   <div className="w-12 h-12 rounded-full bg-[#cdd8f5] overflow-hidden relative shrink-0">
                     <img
-                      src="/testimonials/dentist.png"
+                      src="/testimonials/dentist.svg"
                       alt=""
                       className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[31px]"
                     />
