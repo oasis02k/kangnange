@@ -8,6 +8,7 @@ import SectionTestimonial from "./sections/SectionTestimonial";
 import SectionCases from "./sections/SectionCases";
 import SectionEquipment from "./sections/SectionEquipment";
 import SectionContact from "./sections/SectionContact";
+import Footer from "./sections/Footer";
 
 
 
@@ -137,6 +138,7 @@ export default function Home() {
       <SectionCases />
       <SectionEquipment />
       <SectionContact />
+      <Footer />
     </>
   );
 }
