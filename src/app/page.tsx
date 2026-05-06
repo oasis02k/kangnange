@@ -2,6 +2,15 @@
 
 import { useState } from "react";
 
+function ArrowRight() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M15.2084 10.65H3.95837C3.60837 10.65 3.33337 10.375 3.33337 10.025C3.33337 9.675 3.60837 9.4 3.95837 9.4H15.2084C15.5584 9.4 15.8334 9.675 15.8334 10.025C15.8334 10.375 15.5584 10.65 15.2084 10.65Z" fill="currentColor"/>
+      <path d="M12.0834 15.025C12.0014 15.026 11.9201 15.0098 11.8448 14.9775C11.7694 14.9453 11.7017 14.8975 11.6459 14.8375C11.3959 14.5875 11.3959 14.2 11.6459 13.95L15.5834 10.0125L11.6459 6.075C11.3959 5.825 11.3959 5.4375 11.6459 5.1875C11.8959 4.9375 12.2834 4.9375 12.5334 5.1875L16.9084 9.5625C17.1584 9.8125 17.1584 10.2 16.9084 10.45L12.5334 14.825C12.4084 14.95 12.2459 15.0125 12.0959 15.0125L12.0834 15.025Z" fill="currentColor"/>
+    </svg>
+  );
+}
+
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -31,7 +40,7 @@ export default function Home() {
           <div className="mt-auto">
             <button className="w-full h-12 bg-[#ecc744] rounded-xl flex items-center justify-center gap-1 font-sans font-medium text-base text-[#1c1c19] tracking-[-0.02em]">
               비즈니스 제휴 문의
-              →
+              <ArrowRight />
             </button>
           </div>
         </div>
@@ -79,7 +88,7 @@ export default function Home() {
             <div className="hidden md:block w-[215px]">
               <button className="w-full h-12 bg-[#ecc744] rounded-xl flex items-center justify-center gap-1 font-sans font-medium text-base text-[#1c1c19] tracking-[-0.02em]">
                 비즈니스 제휴 문의
-                →
+                <ArrowRight />
               </button>
             </div>
 
