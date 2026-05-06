@@ -4,6 +4,7 @@ import { useState } from "react";
 import SectionWhy from "./sections/SectionWhy";
 import SectionServices from "./sections/SectionServices";
 import SectionWorkflow from "./sections/SectionWorkflow";
+import SectionTestimonial from "./sections/SectionTestimonial";
 
 
 
@@ -129,6 +130,7 @@ export default function Home() {
       <SectionWhy />
       <SectionServices />
       <SectionWorkflow />
+      <SectionTestimonial />
     </>
   );
 }
