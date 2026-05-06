@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 
-const hamburgerIcon = "https://www.figma.com/api/mcp/asset/e3ea4b46-101d-4ad4-a281-db809207dca4";
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -85,7 +84,11 @@ export default function Home() {
               className="md:hidden w-6 h-6 flex items-center justify-center"
               aria-label="메뉴 열기"
             >
-              <img src={hamburgerIcon} alt="" className="w-full h-full object-contain" />
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2 6H22" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+                <path d="M2 12H22" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+                <path d="M2 18H22" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+              </svg>
             </button>
 
           </div>
