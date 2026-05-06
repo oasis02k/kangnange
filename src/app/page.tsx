@@ -33,7 +33,8 @@ const A = {
   contactBg:  "https://www.figma.com/api/mcp/asset/55d98c75-38ce-49f5-b3e1-7db7b035e0bc",
   footerLogo: "https://www.figma.com/api/mcp/asset/ba35f30b-430b-4f54-8c5d-b8b2323a76ff",
   dentist:    "https://www.figma.com/api/mcp/asset/64249ba7-9b93-4ede-8934-2a85029402c6",
-  arrow:      "https://www.figma.com/api/mcp/asset/f67f9de0-f7cf-45c3-8011-7fec6802f6c0",
+  arrow:      "https://www.figma.com/api/mcp/asset/532170e6-1acb-484c-8b20-be238534f18f",
+  hamburger:  "https://www.figma.com/api/mcp/asset/e3ea4b46-101d-4ad4-a281-db809207dca4",
   chevronL:   "https://www.figma.com/api/mcp/asset/962dd669-2806-4cd2-912b-fc2b8945ce70",
   chevronR:   "https://www.figma.com/api/mcp/asset/8084eac1-cbd3-40bf-ad97-687af1f3070c",
 };
@@ -120,11 +121,69 @@ function ContactButton({ href, className = "" }: { href: string; className?: str
   return (
     <a
       href={href}
-      className={`inline-flex items-center gap-1 bg-[#ecc744] text-[#1c1c19] font-medium text-base px-6 h-12 rounded-xl hover:bg-[#d4b23c] transition-colors ${className}`}
+      className={`inline-flex items-center justify-center gap-1 bg-[#ecc744] text-[#1c1c19] font-medium text-base px-6 h-12 rounded-xl hover:bg-[#d4b23c] transition-colors ${className}`}
     >
       비즈니스 제휴 문의
       <img src={A.arrow} alt="" className="w-5 h-5" />
     </a>
+  );
+}
+
+function Navbar({ onMenuOpen }: { onMenuOpen: () => void }) {
+  return (
+    <header className="sticky top-0 z-50 bg-[#1c1c19] border-b border-white/[0.32] h-20 overflow-hidden">
+      <div className="flex items-center justify-between h-full px-5 md:px-8">
+        {/* Logo */}
+        <a href="#" className="font-display text-2xl text-[#ecc744] tracking-[-0.03em] leading-none shrink-0">
+          강냉이.com
+        </a>
+
+        {/* Desktop nav */}
+        <nav className="hidden md:flex items-center gap-14 font-medium text-base tracking-[-0.02em] text-white">
+          <a href="#" className="hover:text-[#ecc744] transition-colors">Home</a>
+          <a href="#cases" className="hover:text-[#ecc744] transition-colors w-[76px] text-center">제작 케이스</a>
+          <a href="#equipment" className="hover:text-[#ecc744] transition-colors w-[76px]">기공장비</a>
+        </nav>
+
+        {/* Desktop CTA */}
+        <div className="hidden md:flex w-[215px]">
+          <ContactButton href="#contact" className="w-full" />
+        </div>
+
+        {/* Mobile hamburger */}
+        <button
+          onClick={onMenuOpen}
+          className="md:hidden w-6 h-6 flex items-center justify-center"
+          aria-label="메뉴 열기"
+        >
+          <img src={A.hamburger} alt="" className="w-full h-full object-contain" />
+        </button>
+      </div>
+    </header>
+  );
+}
+
+function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
+  if (!open) return null;
+  return (
+    <div className="fixed inset-0 z-50 bg-[#1c1c19] flex flex-col px-5 pt-6 pb-10">
+      <div className="flex items-center justify-between mb-12">
+        <a href="#" className="font-display text-2xl text-[#ecc744] tracking-[-0.03em] leading-none">
+          강냉이.com
+        </a>
+        <button onClick={onClose} className="text-white text-2xl leading-none" aria-label="메뉴 닫기">
+          ✕
+        </button>
+      </div>
+      <nav className="flex flex-col gap-8 font-medium text-2xl text-white tracking-[-0.03em]">
+        <a href="#" onClick={onClose} className="hover:text-[#ecc744] transition-colors">Home</a>
+        <a href="#cases" onClick={onClose} className="hover:text-[#ecc744] transition-colors">제작 케이스</a>
+        <a href="#equipment" onClick={onClose} className="hover:text-[#ecc744] transition-colors">기공장비</a>
+      </nav>
+      <div className="mt-auto">
+        <ContactButton href="#contact" className="w-full" />
+      </div>
+    </div>
   );
 }
 
@@ -163,6 +222,7 @@ function CaseCard({ before, after, title, desc }: { before: string; after: strin
 }
 
 export default function Home() {
+  const [menuOpen, setMenuOpen] = useState(false);
   const [form, setForm] = useState({ clinic: "", phone: "", name: "", email: "", message: "" });
 
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
@@ -171,31 +231,20 @@ export default function Home() {
   return (
     <div className="flex flex-col w-full">
 
-      {/* ── Navbar ── */}
-      <header className="sticky top-0 z-50 bg-[#1c1c19] border-b border-white/[0.32] h-20">
-        <div className="flex items-center justify-between h-full max-w-[1440px] mx-auto px-8">
-          <a href="#" className="font-display text-2xl text-[#ecc744] tracking-[-0.045em] leading-none">
-            강냉이.com
-          </a>
-          <nav className="flex items-center gap-14 font-medium text-base tracking-[-0.02em] text-white">
-            <a href="#">Home</a>
-            <a href="#cases">제작 케이스</a>
-            <a href="#equipment">기공장비</a>
-          </nav>
-          <ContactButton href="#contact" />
-        </div>
-      </header>
+      <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
+      <Navbar onMenuOpen={() => setMenuOpen(true)} />
 
       {/* ── Hero ── */}
-      <section className="bg-[#1c1c19] flex flex-col justify-end h-[800px] overflow-hidden">
-        <div className="max-w-[1440px] mx-auto w-full px-8 pb-24 flex flex-col gap-4">
-          <h1 className="font-display text-[56px] text-[#f5f5f5] tracking-[-0.03em] leading-[1.2] whitespace-pre-line">
+      <section className="bg-[#1c1c19] flex flex-col justify-end min-h-[600px] md:h-[800px] overflow-hidden">
+        <div className="w-full px-5 md:px-8 pb-8 md:pb-24 flex flex-col gap-4">
+          <h1 className="font-display text-[28px] md:text-[56px] text-[#f5f5f5] tracking-[-0.03em] leading-[1.2] whitespace-pre-wrap">
             {"스캔 데이터로 정확하게.\n납기와 품질을 지키는 기공소"}
           </h1>
-          <p className="text-lg text-white tracking-[-0.03em] leading-relaxed">
-            구강스캐너 데이터 기반으로 모델리스 제작을 지원합니다.
+          <p className="text-base md:text-lg text-white tracking-[-0.03em] leading-relaxed whitespace-pre-wrap">
+            {"구강스캐너 데이터 기반으로\n모델리스 제작을 지원합니다."}
           </p>
-          <ContactButton href="#contact" className="mt-2 self-start" />
+          {/* Mobile: full-width button | Desktop: auto-width */}
+          <ContactButton href="#contact" className="mt-2 w-full md:w-[215px]" />
         </div>
       </section>
 
