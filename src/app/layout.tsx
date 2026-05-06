@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
-import { Noto_Sans_KR, Black_Han_Sans } from "next/font/google";
+import localFont from "next/font/local";
+import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
+
+const a2z = localFont({
+  src: "./fonts/a2z-7bold.woff2",
+  variable: "--font-a2z",
+  weight: "700",
+});
 
 const notoSansKR = Noto_Sans_KR({
   variable: "--font-noto-sans-kr",
   subsets: ["latin"],
   weight: ["400", "500", "700"],
-});
-
-const blackHanSans = Black_Han_Sans({
-  variable: "--font-black-han-sans",
-  subsets: ["latin"],
-  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -23,7 +24,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ko" className={`${notoSansKR.variable} ${blackHanSans.variable} h-full antialiased`}>
+    <html lang="ko" className={`${a2z.variable} ${notoSansKR.variable} h-full antialiased`}>
       <body className="min-h-full">{children}</body>
     </html>
   );
