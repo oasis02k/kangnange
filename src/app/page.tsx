@@ -1,20 +1,105 @@
+"use client";
+
+import { useState } from "react";
+
+const arrowIcon    = "https://www.figma.com/api/mcp/asset/532170e6-1acb-484c-8b20-be238534f18f";
+const hamburgerIcon = "https://www.figma.com/api/mcp/asset/e3ea4b46-101d-4ad4-a281-db809207dca4";
+
 export default function Home() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-white px-6">
-      <div className="flex flex-col items-center gap-6 text-center">
-        <h1 className="text-6xl font-bold tracking-tight text-gray-900 sm:text-8xl" style={{ fontFamily: "var(--font-noto-sans-kr)" }}>
-          Kangnange
-        </h1>
-        <p className="text-lg text-gray-500 max-w-sm">
-          Something is coming. Stay tuned.
-        </p>
-        <a
-          href="mailto:hello@kangnange.com"
-          className="mt-4 inline-block rounded-full bg-gray-900 px-6 py-3 text-sm font-medium text-white hover:bg-gray-700 transition-colors"
-        >
-          Get in touch
-        </a>
-      </div>
-    </main>
+    <>
+      {/* ── Mobile full-screen menu overlay ── */}
+      {menuOpen && (
+        <div className="fixed inset-0 z-50 bg-[#1c1c19] flex flex-col px-5 pt-6 pb-10">
+          <div className="flex items-center justify-between mb-12">
+            <a href="#" className="font-display text-2xl text-[#ecc744] tracking-[-0.03em] leading-none">
+              강냉이.com
+            </a>
+            <button
+              onClick={() => setMenuOpen(false)}
+              className="text-white text-2xl leading-none"
+              aria-label="메뉴 닫기"
+            >
+              ✕
+            </button>
+          </div>
+          <nav className="flex flex-col gap-8 font-sans font-medium text-2xl text-white tracking-[-0.03em]">
+            <a href="#" onClick={() => setMenuOpen(false)}>Home</a>
+            <a href="#" onClick={() => setMenuOpen(false)}>제작 케이스</a>
+            <a href="#" onClick={() => setMenuOpen(false)}>기공장비</a>
+          </nav>
+          <div className="mt-auto">
+            <button className="w-full h-12 bg-[#ecc744] rounded-xl flex items-center justify-center gap-1 font-sans font-medium text-base text-[#1c1c19] tracking-[-0.02em]">
+              비즈니스 제휴 문의
+              <img src={arrowIcon} alt="" className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* ── Hero section ── */}
+      <section className="relative bg-[#1c1c19] flex flex-col justify-end min-h-svh">
+
+        {/* Navbar — absolute so it overlays the hero */}
+        <header className="absolute top-0 left-0 right-0 z-10 h-20 bg-[#1c1c19] border-b border-white/[0.32] overflow-hidden">
+          <div className="flex items-center justify-between h-full px-5 md:px-8">
+
+            {/* Logo */}
+            <a href="#" className="font-display text-2xl text-[#ecc744] tracking-[-0.03em] leading-none shrink-0">
+              강냉이.com
+            </a>
+
+            {/* Desktop: centred nav links */}
+            <nav className="hidden md:flex items-center gap-14 font-sans font-medium text-base text-white tracking-[-0.02em]">
+              <span>Home</span>
+              <span>제작 케이스</span>
+              <span className="w-[76px]">기공장비</span>
+            </nav>
+
+            {/* Desktop: CTA button */}
+            <div className="hidden md:block w-[215px]">
+              <button className="w-full h-12 bg-[#ecc744] rounded-xl flex items-center justify-center gap-1 font-sans font-medium text-base text-[#1c1c19] tracking-[-0.02em]">
+                비즈니스 제휴 문의
+                <img src={arrowIcon} alt="" className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Mobile: hamburger */}
+            <button
+              onClick={() => setMenuOpen(true)}
+              className="md:hidden w-6 h-6 flex items-center justify-center"
+              aria-label="메뉴 열기"
+            >
+              <img src={hamburgerIcon} alt="" className="w-full h-full object-contain" />
+            </button>
+
+          </div>
+        </header>
+
+        {/* Hero content — pinned to bottom */}
+        <div className="flex flex-col gap-4 px-5 md:px-8 pb-8 md:pb-24">
+
+          {/* Heading: 28px mobile → 56px desktop */}
+          <h1 className="font-display text-[28px] md:text-[56px] text-[#f5f5f5] tracking-[-0.03em] leading-[1.2] whitespace-pre-wrap">
+            {"스캔 데이터로 정확하게.\n납기와 품질을 지키는 기공소"}
+          </h1>
+
+          {/* Subtext: 16px mobile → 18px desktop; mobile breaks after 기반으로 */}
+          <p className="font-sans font-normal text-base md:text-[18px] text-white tracking-[-0.03em] leading-[1.4]">
+            <span className="md:hidden">{"구강스캐너 데이터 기반으로\n모델리스 제작을 지원합니다."}</span>
+            <span className="hidden md:inline">구강스캐너 데이터 기반으로 모델리스 제작을 지원합니다.</span>
+          </p>
+
+          {/* CTA: full-width mobile → 215px desktop */}
+          <button className="mt-2 w-full md:w-[215px] h-12 bg-[#ecc744] rounded-xl flex items-center justify-center gap-1 font-sans font-medium text-base text-[#1c1c19] tracking-[-0.02em]">
+            비즈니스 제휴 문의
+            <img src={arrowIcon} alt="" className="w-5 h-5" />
+          </button>
+
+        </div>
+      </section>
+    </>
   );
 }
