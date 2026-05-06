@@ -49,7 +49,7 @@ export default function SectionEquipment() {
           {EQUIPMENT.map((item) => (
             <div
               key={item.title}
-              className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-12"
+              className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-12 md:h-[475px]"
             >
               {/* Text */}
               <div className="flex flex-col gap-2 md:gap-3 text-center md:text-left md:flex-1">
@@ -62,13 +62,13 @@ export default function SectionEquipment() {
               </div>
 
               {/* Image(s) */}
-              <div className="flex items-end justify-center gap-4 shrink-0">
+              <div className="flex items-end justify-center gap-4 shrink-0 md:h-full">
                 {item.images.map((img) => (
-                  <div key={img.src} className="flex flex-col items-center gap-2">
+                  <div key={img.src} className="flex flex-col items-center gap-2 md:h-full">
                     <img
                       src={img.src}
                       alt={img.alt}
-                      className="h-40 md:h-52 w-auto object-contain"
+                      className="h-40 md:h-full w-auto object-contain"
                     />
                     {img.label && (
                       <span className="font-sans font-normal text-sm text-[rgba(28,28,25,0.56)] tracking-[-0.03em]">
