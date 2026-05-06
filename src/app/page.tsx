@@ -40,15 +40,20 @@ export default function Home() {
       {/* ── Hero section ── */}
       <section className="relative bg-[#1c1c19] flex flex-col justify-end min-h-svh overflow-hidden">
 
-        {/* Background video */}
+        {/* Desktop video */}
         <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay muted loop playsInline
+          className="hidden md:block absolute inset-0 w-full h-full object-cover"
         >
           <source src="/hero-video.mp4" type="video/mp4" />
+        </video>
+
+        {/* Mobile video */}
+        <video
+          autoPlay muted loop playsInline
+          className="md:hidden absolute inset-0 w-full h-full object-cover"
+        >
+          <source src="/hero-video-mobile.mp4" type="video/mp4" />
         </video>
 
         {/* Dark overlay so text stays readable */}
