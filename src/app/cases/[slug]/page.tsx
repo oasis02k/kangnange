@@ -1,4 +1,4 @@
-export const revalidate = 60;
+export const revalidate = 0;
 
 import { notFound } from "next/navigation";
 import { client } from "../../../sanity/client";

@@ -1,6 +1,6 @@
 import { client } from "../../sanity/client";
 
-export const revalidate = 60;
+export const revalidate = 0;
 import CasesClient from "./CasesClient";
 
 const CASES_QUERY = `*[_type == "case"] | order(_createdAt desc) {
