@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useLayoutEffect } from "react";
+import gsap from "gsap";
 
 const CASES = [
   {
@@ -23,59 +24,124 @@ const CASES = [
   },
 ];
 
-function ChevronLeft() {
-  return (
-    <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M6 1L1 6L6 11" stroke="#1c1c19" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
+function CaseCard({
+  title,
+  description,
+  before,
+  after,
+}: {
+  title: string;
+  description: string;
+  before: string;
+  after: string;
+}) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const afterImgRef  = useRef<HTMLImageElement>(null);
+  const dividerRef   = useRef<HTMLDivElement>(null);
+  const isDragging   = useRef(false);
 
-function ChevronRight() {
-  return (
-    <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M1 1L6 6L1 11" stroke="#1c1c19" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
+  useLayoutEffect(() => {
+    gsap.set(afterImgRef.current,  { clipPath: "inset(0 50% 0 0)" });
+    gsap.set(dividerRef.current,   { xPercent: -50, left: "50%" });
+  }, []);
 
-function CaseCard({ title, description, before, after }: { title: string; description: string; before: string; after: string }) {
-  const [showAfter, setShowAfter] = useState(true);
+  const updatePos = (clientX: number) => {
+    if (!containerRef.current) return;
+    const { left, width } = containerRef.current.getBoundingClientRect();
+    const pct = Math.max(1, Math.min(99, ((clientX - left) / width) * 100));
+    gsap.set(afterImgRef.current, { clipPath: `inset(0 ${100 - pct}% 0 0)` });
+    gsap.set(dividerRef.current,  { left: `${pct}%` });
+  };
+
+  /* ── mouse ─────────────────────────────────── */
+  const onMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    isDragging.current = true;
+    updatePos(e.clientX);
+
+    const onMove = (e: MouseEvent) => { if (isDragging.current) updatePos(e.clientX); };
+    const onUp   = () => {
+      isDragging.current = false;
+      document.removeEventListener("mousemove", onMove);
+      document.removeEventListener("mouseup",   onUp);
+    };
+    document.addEventListener("mousemove", onMove);
+    document.addEventListener("mouseup",   onUp);
+  };
+
+  /* ── touch (stopPropagation keeps card-swipe from firing on image) ── */
+  const onTouchStart = (e: React.TouchEvent) => {
+    e.stopPropagation();
+    isDragging.current = true;
+    updatePos(e.touches[0].clientX);
+  };
+  const onTouchMove = (e: React.TouchEvent) => {
+    e.stopPropagation();
+    if (isDragging.current) updatePos(e.touches[0].clientX);
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    e.stopPropagation();
+    isDragging.current = false;
+  };
 
   return (
     <div className="flex flex-col overflow-hidden rounded-2xl flex-1">
-      {/* Image with before/after toggle */}
-      <div className="relative h-40 md:h-auto md:aspect-[770/410] overflow-hidden shrink-0">
-        <img src={before} alt="Before" className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${showAfter ? "opacity-0" : "opacity-100"}`} />
-        <img src={after} alt="After" className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${showAfter ? "opacity-100" : "opacity-0"}`} />
+      {/* Comparison image area */}
+      <div
+        ref={containerRef}
+        onMouseDown={onMouseDown}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+        className="relative h-40 md:h-auto md:aspect-[770/410] overflow-hidden shrink-0 select-none cursor-ew-resize"
+      >
+        {/* Before (base) */}
+        <img src={before} alt="Before" className="absolute inset-0 w-full h-full object-cover pointer-events-none" />
 
-        {/* Toggle pill */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="bg-[#1c1c19] flex items-center gap-2 p-1.5 rounded-full pointer-events-auto">
-            <button
-              onClick={() => setShowAfter(false)}
-              className="bg-[#ecc744] w-6 h-6 rounded-full flex items-center justify-center shrink-0"
-              aria-label="Before"
-            >
-              <ChevronLeft />
-            </button>
-            <button
-              onClick={() => setShowAfter(true)}
-              className="bg-[#ecc744] w-6 h-6 rounded-full flex items-center justify-center shrink-0"
-              aria-label="After"
-            >
-              <ChevronRight />
-            </button>
+        {/* After (clipped) */}
+        <img
+          ref={afterImgRef}
+          src={after}
+          alt="After"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+          style={{ clipPath: "inset(0 50% 0 0)" }}
+        />
+
+        {/* Before / After labels */}
+        <span className="absolute bottom-3 left-3 font-sans font-medium text-xs text-white bg-black/40 px-2 py-1 rounded-full pointer-events-none">
+          Before
+        </span>
+        <span className="absolute bottom-3 right-3 font-sans font-medium text-xs text-white bg-black/40 px-2 py-1 rounded-full pointer-events-none">
+          After
+        </span>
+
+        {/* Divider */}
+        <div
+          ref={dividerRef}
+          className="absolute inset-y-0 pointer-events-none"
+          style={{ left: "50%", transform: "translateX(-50%)" }}
+        >
+          {/* Vertical line */}
+          <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-[2px] bg-white/80" />
+
+          {/* Handle — original pill UI */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#1c1c19] flex items-center gap-2 p-1.5 rounded-full shadow-md">
+            <span className="bg-[#ecc744] w-6 h-6 rounded-full flex items-center justify-center shrink-0">
+              <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="#1c1c19" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </span>
+            <span className="bg-[#ecc744] w-6 h-6 rounded-full flex items-center justify-center shrink-0">
+              <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1L6 6L1 11" stroke="#1c1c19" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </span>
           </div>
         </div>
       </div>
 
       {/* Text */}
       <div className="bg-[#f5f5f5] flex flex-col gap-4 p-4 md:p-6 flex-1">
-        <h3 className="font-sans font-bold text-base md:text-2xl text-[#1c1c19] tracking-[-0.03em] leading-[1.2]">
+        <h3 className="font-sans font-bold text-base md:text-[20px] text-[#1c1c19] tracking-[-0.03em] leading-[1.2]">
           {title}
         </h3>
-        <p className="font-sans font-normal text-base md:text-[18px] text-[#1c1c19] tracking-[-0.03em] leading-[1.4]">
+        <p className="font-sans font-normal text-base md:text-[18px] text-[rgba(28,28,25,0.56)] tracking-[-0.03em] leading-[1.4]">
           {description}
         </p>
       </div>
@@ -83,7 +149,37 @@ function CaseCard({ title, description, before, after }: { title: string; descri
   );
 }
 
+const SLIDE_GAP = 16;
+
 export default function SectionCases() {
+  const [active, setActive]  = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const trackRef     = useRef<HTMLDivElement>(null);
+  const touchStartX  = useRef(0);
+
+  const slideWidth = () =>
+    containerRef.current ? containerRef.current.offsetWidth + SLIDE_GAP : 0;
+
+  const snapTo = (index: number) => {
+    gsap.to(trackRef.current, { x: -index * slideWidth(), duration: 0.45, ease: "power3.inOut" });
+    setActive(index);
+  };
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    gsap.killTweensOf(trackRef.current);
+  };
+  const onTouchMove = (e: React.TouchEvent) => {
+    const dx = e.touches[0].clientX - touchStartX.current;
+    gsap.set(trackRef.current, { x: -active * slideWidth() + dx });
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    if (dx < -50) snapTo(Math.min(active + 1, CASES.length - 1));
+    else if (dx > 50) snapTo(Math.max(active - 1, 0));
+    else snapTo(active);
+  };
+
   return (
     <section className="bg-white py-8 md:py-24 px-5 md:px-8">
       <div className="flex flex-col gap-6 md:gap-12 items-center w-full max-w-[1440px] mx-auto">
@@ -98,11 +194,41 @@ export default function SectionCases() {
           </p>
         </div>
 
-        {/* Cards */}
-        <div className="flex flex-col md:flex-row gap-4 md:gap-6 w-full">
-          {CASES.map((c) => (
-            <CaseCard key={c.title} {...c} />
-          ))}
+        {/* Desktop: row */}
+        <div className="hidden md:flex gap-6 w-full">
+          {CASES.map((c) => <CaseCard key={c.title} {...c} />)}
+        </div>
+
+        {/* Mobile: swipeable slider */}
+        <div className="md:hidden w-full flex flex-col gap-4">
+          <div
+            ref={containerRef}
+            className="w-full overflow-hidden"
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+          >
+            <div ref={trackRef} className="flex items-stretch gap-4">
+              {CASES.map((c) => (
+                <div key={c.title} className="min-w-full">
+                  <CaseCard {...c} />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Dot indicators */}
+          <div className="flex justify-center items-center gap-2">
+            {CASES.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => snapTo(i)}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  active === i ? "w-5 bg-[#1c1c19]" : "w-1.5 bg-[rgba(28,28,25,0.2)]"
+                }`}
+              />
+            ))}
+          </div>
         </div>
 
         {/* CTA */}

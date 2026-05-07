@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import gsap from "gsap";
 
 function Field({
   label,
@@ -23,7 +24,20 @@ function Field({
 }
 
 const inputClass =
-  "w-full h-12 border border-black/[0.12] rounded-lg px-4 font-sans font-normal text-base text-[#1c1c19] tracking-[-0.03em] placeholder:text-black/[0.32] outline-none focus:border-[#1c1c19] transition-colors";
+  "w-full h-12 border border-black/[0.12] rounded-lg px-4 font-sans font-normal text-base text-[#1c1c19] tracking-[-0.03em] placeholder:text-black/[0.32] outline-none focus:border-[#ecc744] transition-colors";
+
+function formatPhone(raw: string): string {
+  const d = raw.replace(/\D/g, "");
+  if (d.startsWith("02")) {
+    if (d.length <= 2) return d;
+    if (d.length <= 5) return `${d.slice(0, 2)}-${d.slice(2)}`;
+    if (d.length <= 9) return `${d.slice(0, 2)}-${d.slice(2, 5)}-${d.slice(5)}`;
+    return `${d.slice(0, 2)}-${d.slice(2, 6)}-${d.slice(6, 10)}`;
+  }
+  if (d.length <= 3) return d;
+  if (d.length <= 7) return `${d.slice(0, 3)}-${d.slice(3)}`;
+  return `${d.slice(0, 3)}-${d.slice(3, 7)}-${d.slice(7, 11)}`;
+}
 
 export default function SectionContact() {
   const [clinicName, setClinicName] = useState("");
@@ -32,7 +46,25 @@ export default function SectionContact() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [fileName, setFileName] = useState("");
-  const fileRef = useRef<HTMLInputElement>(null);
+  const fileRef  = useRef<HTMLInputElement>(null);
+  const fillRef  = useRef<HTMLSpanElement>(null);
+  const arrowRef = useRef<HTMLSpanElement>(null);
+
+  const isValid = clinicName.trim() !== "" && phone.trim() !== "";
+
+  const handleMouseEnter = () => {
+    if (!isValid) return;
+    gsap.fromTo(fillRef.current, { xPercent: -101 }, { xPercent: 0, duration: 0.5, ease: "power3.out" });
+    gsap.timeline()
+      .to(arrowRef.current,  { x: "130%", duration: 0.18, ease: "power2.in" })
+      .set(arrowRef.current, { x: "-130%" })
+      .to(arrowRef.current,  { x: "0%",   duration: 0.22, ease: "power2.out" });
+  };
+
+  const handleMouseLeave = () => {
+    if (!isValid) return;
+    gsap.to(fillRef.current, { xPercent: 101, duration: 0.45, ease: "power3.in" });
+  };
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -77,7 +109,7 @@ export default function SectionContact() {
           {/* Right: form */}
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col gap-6 px-6 py-8 md:p-8 flex-1"
+            className="flex flex-col gap-6 p-4 md:p-8 flex-1"
           >
             <Field label="치과명" required>
               <input
@@ -94,8 +126,9 @@ export default function SectionContact() {
               <input
                 type="tel"
                 value={phone}
-                onChange={(e) => setPhone(e.target.value)}
+                onChange={(e) => setPhone(formatPhone(e.target.value))}
                 placeholder="010-4669-0302"
+                maxLength={13}
                 className={inputClass}
                 required
               />
@@ -127,33 +160,42 @@ export default function SectionContact() {
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="문의사항을 남겨주세요"
                 rows={5}
-                className="w-full border border-black/[0.12] rounded-lg px-4 py-2 font-sans font-normal text-base text-[#1c1c19] tracking-[-0.03em] placeholder:text-black/[0.32] outline-none focus:border-[#1c1c19] transition-colors resize-none"
+                className="w-full border border-black/[0.12] rounded-lg px-4 py-2 font-sans font-normal text-base text-[#1c1c19] tracking-[-0.03em] placeholder:text-black/[0.32] outline-none focus:border-[#ecc744] transition-colors resize-none"
               />
             </Field>
 
             <Field label="업로드 이미지">
-              <div
-                className="w-full h-[119px] border border-black/[0.12] rounded-lg px-4 py-2 flex items-center cursor-pointer hover:border-[#1c1c19] transition-colors"
-                onClick={() => fileRef.current?.click()}
-              >
-                <span className="font-sans font-normal text-base text-black/[0.32] tracking-[-0.03em]">
+              <div className="flex items-center gap-2 w-full h-12 border border-black/[0.12] rounded-lg px-4 transition-colors focus-within:border-[#ecc744]">
+                <span className={`flex-1 min-w-0 truncate font-sans font-normal text-base tracking-[-0.03em] ${fileName ? "text-[#1c1c19]" : "text-black/[0.32]"}`}>
                   {fileName || "이미지를 업로드해 주세요"}
                 </span>
-                <input
-                  ref={fileRef}
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={(e) => setFileName(e.target.files?.[0]?.name ?? "")}
-                />
+                <label className="shrink-0 cursor-pointer bg-[rgba(28,28,25,0.06)] hover:bg-[rgba(28,28,25,0.1)] transition-colors px-3 h-7 rounded-md flex items-center font-sans font-medium text-sm text-[#1c1c19] tracking-[-0.02em]">
+                  찾아보기
+                  <input
+                    ref={fileRef}
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => setFileName(e.target.files?.[0]?.name ?? "")}
+                  />
+                </label>
               </div>
             </Field>
 
             <button
               type="submit"
-              className="w-full h-14 bg-[#ecc744] rounded-full font-sans font-medium text-[20px] text-[#1c1c19] tracking-[-0.03em] leading-none"
+              disabled={!isValid}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              className={`relative overflow-hidden w-full h-14 rounded-full font-sans font-medium text-[20px] text-[#1c1c19] tracking-[-0.03em] leading-none bg-[#ecc744] transition-opacity ${isValid ? "opacity-100" : "opacity-40 cursor-not-allowed"}`}
             >
-              보내기
+              <span ref={fillRef} className="absolute inset-0 bg-[#f0c830]" style={{ transform: "translateX(-101%)" }} />
+              <span className="relative z-10 flex items-center justify-center gap-1.5">
+                보내기
+                <span className="relative overflow-hidden inline-flex" style={{ width: "0.9em", height: "1.1em" }}>
+                  <span ref={arrowRef} className="absolute inset-0 flex items-center justify-center">→</span>
+                </span>
+              </span>
             </button>
           </form>
         </div>

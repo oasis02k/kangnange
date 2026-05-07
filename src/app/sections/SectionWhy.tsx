@@ -99,7 +99,7 @@ export default function SectionWhy() {
       className="bg-[#1c1c19] flex flex-col items-center justify-center min-h-screen px-5 md:px-8"
     >
       <div className="flex flex-col gap-12 text-center w-full max-w-[1440px] mx-auto">
-        <h2 className="font-display text-[32px] md:text-[56px] text-white tracking-[-0.03em] leading-[1.2] w-full">
+        <h2 className="font-display text-[32px] md:text-[56px] text-[#ecc744] tracking-[-0.03em] leading-[1.2] w-full">
           Why 강냉이.com
         </h2>
 

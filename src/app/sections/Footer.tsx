@@ -62,7 +62,7 @@ export default function Footer() {
         <img
           src="/footer/wordmark.svg"
           alt="강냉이.com"
-          className="w-full mt-8 md:mt-12"
+          className="w-full mt-8 md:mt-12 translate-y-[18%]"
         />
 
       </div>
