@@ -17,7 +17,7 @@ export type SanityCase = {
 function CaseCard({ item }: { item: SanityCase }) {
   return (
     <a href={`/cases/${item.slug}`} className="flex flex-col relative bg-white rounded-2xl overflow-hidden group">
-      <div className="relative w-full aspect-[658/351] overflow-hidden bg-[#e8e8e6]">
+      <div className="relative w-full aspect-[658/351] overflow-hidden bg-[#e8e8e6] rounded-b-2xl">
         {item.image && (
           <img
             src={item.image}
