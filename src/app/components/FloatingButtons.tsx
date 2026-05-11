@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import gsap from "gsap";
 
 const ReceiptIcon = () => (
@@ -67,7 +68,10 @@ function FloatBtn({ children, href, variant = "primary", icon }: {
 }
 
 export default function FloatingButtons() {
+  const pathname = usePathname();
   const [visible, setVisible] = useState(false);
+
+  if (pathname.startsWith("/studio")) return null;
 
   useEffect(() => {
     const isDesktop = () => window.innerWidth >= 768;
