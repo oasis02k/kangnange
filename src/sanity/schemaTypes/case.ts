@@ -38,17 +38,17 @@ export const caseType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: "description",
-      title: "설명",
-      type: "text",
-      rows: 4,
-    }),
-    defineField({
       name: "images",
       title: "이미지 (최대 6장)",
       type: "array",
       of: [defineArrayMember({ type: "image", options: { hotspot: true } })],
       validation: (rule) => rule.max(6),
+    }),
+    defineField({
+      name: "description",
+      title: "설명",
+      type: "text",
+      rows: 4,
     }),
   ],
   preview: {
