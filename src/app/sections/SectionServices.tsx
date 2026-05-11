@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import { useRef } from "react";
 import gsap from "gsap";
 
 const SERVICES = [
@@ -107,42 +107,33 @@ function ServiceCard({ service }: { service: (typeof SERVICES)[number] }) {
   );
 }
 
-function CTAButton({ children }: { children: React.ReactNode }) {
-  const fillRef  = useRef<HTMLSpanElement>(null);
+function CTAButton({ children, href }: { children: React.ReactNode; href: string }) {
   const arrowRef = useRef<HTMLSpanElement>(null);
 
   const handleMouseEnter = () => {
-    gsap.fromTo(fillRef.current, { xPercent: -101 }, { xPercent: 0, duration: 0.5, ease: "power3.out" });
     gsap.timeline()
       .to(arrowRef.current,  { x: "130%", duration: 0.18, ease: "power2.in" })
       .set(arrowRef.current, { x: "-130%" })
       .to(arrowRef.current,  { x: "0%",   duration: 0.22, ease: "power2.out" });
   };
 
-  const handleMouseLeave = () => {
-    gsap.to(fillRef.current, { xPercent: 101, duration: 0.45, ease: "power3.in" });
-  };
-
   return (
-    <button
+    <a
+      href={href}
       onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      className="relative overflow-hidden bg-[#ecc744] h-12 px-6 rounded-xl flex items-center justify-center font-sans font-medium text-base text-[#1c1c19] tracking-[-0.02em] w-full md:w-auto"
+      className="bg-[#ecc744] hover:bg-[#E3BA27] transition-colors h-12 px-6 rounded-xl flex items-center justify-center gap-1.5 font-sans font-medium text-base text-[#1c1c19] tracking-[-0.02em] w-full md:w-auto cursor-pointer"
     >
-      <span ref={fillRef} className="absolute inset-0 bg-[#f0c830]" style={{ transform: "translateX(-101%)" }} />
-      <span className="relative z-10 flex items-center gap-1.5">
-        {children}
-        <span className="relative overflow-hidden inline-flex" style={{ width: "0.9em", height: "1.1em" }}>
-          <span ref={arrowRef} className="absolute inset-0 flex items-center justify-center">→</span>
-        </span>
+      {children}
+      <span className="relative overflow-hidden inline-flex" style={{ width: "0.9em", height: "1.1em" }}>
+        <span ref={arrowRef} className="absolute inset-0 flex items-center justify-center">→</span>
       </span>
-    </button>
+    </a>
   );
 }
 
 export default function SectionServices() {
   return (
-    <section className="bg-[#f5f5f5] py-8 md:py-24 px-5 md:px-8">
+    <section id="services" className="bg-[#f5f5f5] py-8 md:py-24 px-5 md:px-8">
       <div className="flex flex-col gap-6 md:gap-12 items-center w-full max-w-[1440px] mx-auto">
 
         {/* Heading */}
@@ -151,8 +142,8 @@ export default function SectionServices() {
             서비스 소개
           </h2>
           <p className="font-sans font-normal text-base md:text-[18px] text-[rgba(28,28,25,0.56)] tracking-[-0.03em] leading-[1.4]">
-            강냉이 기공소는 최상의 치과 보철물을 만들기 위해 끊임없이 노력합니다.<br />
-            최첨단 기계설비와 청결한 제조환경으로 최상의 결과물을 만듭니다.
+            <span className="md:hidden whitespace-pre-line">{`강냉이 기공소는 최상의 치과 보철물을\n만들기 위해 끊임없이 노력합니다.\n최첨단 기계설비와 청결한 제조환경으로\n최상의 결과물을 만듭니다.`}</span>
+            <span className="hidden md:inline">강냉이 기공소는 최상의 치과 보철물을 만들기 위해 끊임없이 노력합니다.<br />최첨단 기계설비와 청결한 제조환경으로 최상의 결과물을 만듭니다.</span>
           </p>
         </div>
 
@@ -163,7 +154,7 @@ export default function SectionServices() {
           ))}
         </div>
 
-        <CTAButton>케이스 의뢰 하기</CTAButton>
+        <CTAButton href="/contact?inquiry=케이스 의뢰하기">케이스 의뢰 하기</CTAButton>
 
       </div>
     </section>

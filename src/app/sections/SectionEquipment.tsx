@@ -92,7 +92,7 @@ export default function SectionEquipment() {
   }, [startAutoPlay]);
 
   return (
-    <section className="bg-[#f5f5f5] py-8 md:py-24 px-5 md:px-8">
+    <section id="equipment" className="bg-[#f5f5f5] py-8 md:py-24 px-5 md:px-8">
       <div className="flex flex-col gap-6 md:gap-12 items-center w-full max-w-[1440px] mx-auto">
 
         {/* Heading */}
@@ -130,7 +130,7 @@ export default function SectionEquipment() {
                   <div className="flex items-end justify-center gap-4 shrink-0 h-full">
                     {item.images.map((img) => (
                       <div key={img.src} className="flex flex-col items-center gap-2 h-full">
-                        <img src={img.src} alt={img.alt} className="h-full w-auto object-contain" />
+                        <img src={img.src} alt={img.alt} className="h-[80%] w-auto object-contain" />
                         {img.label && (
                           <span className="font-sans font-normal text-sm text-[rgba(28,28,25,0.56)] tracking-[-0.03em]">
                             {img.label}
@@ -151,14 +151,14 @@ export default function SectionEquipment() {
               <button
                 onClick={() => { slideTo(Math.max(active - 1, 0)); startAutoPlay(); }}
                 disabled={active === 0}
-                className="w-10 h-10 rounded-full border border-[rgba(28,28,25,0.12)] flex items-center justify-center text-[#1c1c19] disabled:opacity-30 transition-opacity hover:bg-[rgba(28,28,25,0.06)]"
+                className="w-10 h-10 rounded-full border border-[rgba(28,28,25,0.12)] flex items-center justify-center text-[#1c1c19] disabled:opacity-30 transition-opacity hover:bg-[rgba(28,28,25,0.06)] cursor-pointer disabled:cursor-default"
               >
                 <ArrowLeft />
               </button>
               <button
                 onClick={() => { slideTo(Math.min(active + 1, EQUIPMENT.length - 1)); startAutoPlay(); }}
                 disabled={active === EQUIPMENT.length - 1}
-                className="w-10 h-10 rounded-full border border-[rgba(28,28,25,0.12)] flex items-center justify-center text-[#1c1c19] disabled:opacity-30 transition-opacity hover:bg-[rgba(28,28,25,0.06)]"
+                className="w-10 h-10 rounded-full border border-[rgba(28,28,25,0.12)] flex items-center justify-center text-[#1c1c19] disabled:opacity-30 transition-opacity hover:bg-[rgba(28,28,25,0.06)] cursor-pointer disabled:cursor-default"
               >
                 <ArrowRight />
               </button>
@@ -170,7 +170,7 @@ export default function SectionEquipment() {
                 <button
                   key={i}
                   onClick={() => { slideTo(i); startAutoPlay(); }}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                  className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
                     active === i ? "w-5 bg-[#1c1c19]" : "w-1.5 bg-[rgba(28,28,25,0.2)]"
                   }`}
                 />

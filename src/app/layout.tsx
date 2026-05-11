@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
+import FloatingButtons from "./components/FloatingButtons";
 
 const a2z = localFont({
   src: "./fonts/a2z-7bold.woff2",
@@ -25,7 +26,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ko" className={`${a2z.variable} ${notoSansKR.variable} h-full antialiased`}>
-      <body className="min-h-full">{children}</body>
+      <body className="min-h-full">
+        {children}
+        <FloatingButtons />
+      </body>
     </html>
   );
 }

@@ -1,9 +1,10 @@
 "use client";
 
 import { useRef } from "react";
+import { usePathname } from "next/navigation";
 import gsap from "gsap";
 
-function NavLink({ children, href = "/" }: { children: string; href?: string }) {
+function NavLink({ children, href = "/", onClick }: { children: string; href?: string; onClick?: (e: React.MouseEvent) => void }) {
   const ref = useRef<HTMLAnchorElement>(null);
   const enter = () => gsap.to(ref.current!.children, { y: "-100%", duration: 0.45, ease: "power2.inOut", stagger: 0 });
   const leave = () => gsap.to(ref.current!.children, { y: "0%",    duration: 0.45, ease: "power2.inOut" });
@@ -13,6 +14,7 @@ function NavLink({ children, href = "/" }: { children: string; href?: string }) 
       ref={ref}
       onMouseEnter={enter}
       onMouseLeave={leave}
+      onClick={onClick}
       className="inline-flex flex-col overflow-hidden h-[1.15em] cursor-pointer select-none"
     >
       <span className="leading-none text-white flex-shrink-0">{children}</span>
@@ -21,7 +23,7 @@ function NavLink({ children, href = "/" }: { children: string; href?: string }) 
   );
 }
 
-export function CTAButton({
+export function SecondaryButton({
   children,
   className = "",
   onClick,
@@ -50,9 +52,9 @@ export function CTAButton({
       onClick={onClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`relative overflow-hidden bg-[#ecc744] rounded-xl flex items-center justify-center font-sans font-medium text-base text-[#1c1c19] tracking-[-0.02em] ${className}`}
+      className={`relative overflow-hidden bg-white rounded-xl flex items-center justify-center font-sans font-medium text-base text-[#1c1c19] tracking-[-0.02em] cursor-pointer ${className}`}
     >
-      <span ref={fillRef} className="absolute inset-0 bg-[#f0c830]" style={{ transform: "translateX(-101%)" }} />
+      <span ref={fillRef} className="absolute inset-0 bg-[#f0f0f0]" style={{ transform: "translateX(-101%)" }} />
       <span className="relative z-10 flex items-center gap-1.5">
         {children}
         <span className="relative overflow-hidden inline-flex" style={{ width: "0.9em", height: "1.1em" }}>
@@ -63,7 +65,40 @@ export function CTAButton({
   );
 }
 
+export function CTAButton({
+  children,
+  className = "",
+  onClick,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  onClick?: () => void;
+}) {
+  const arrowRef = useRef<HTMLSpanElement>(null);
+
+  const handleMouseEnter = () => {
+    gsap.timeline()
+      .to(arrowRef.current,  { x: "130%", duration: 0.18, ease: "power2.in" })
+      .set(arrowRef.current, { x: "-130%" })
+      .to(arrowRef.current,  { x: "0%",   duration: 0.22, ease: "power2.out" });
+  };
+
+  return (
+    <button
+      onClick={onClick}
+      onMouseEnter={handleMouseEnter}
+      className={`bg-[#ecc744] hover:bg-[#E3BA27] transition-colors rounded-xl flex items-center justify-center gap-1.5 font-sans font-medium text-base text-[#1c1c19] tracking-[-0.02em] cursor-pointer ${className}`}
+    >
+      {children}
+      <span className="relative overflow-hidden inline-flex" style={{ width: "0.9em", height: "1.1em" }}>
+        <span ref={arrowRef} className="absolute inset-0 flex items-center justify-center">→</span>
+      </span>
+    </button>
+  );
+}
+
 export default function Navbar() {
+  const pathname = usePathname();
   const bar1    = useRef<HTMLSpanElement>(null);
   const bar2    = useRef<HTMLSpanElement>(null);
   const bar3    = useRef<HTMLSpanElement>(null);
@@ -107,7 +142,7 @@ export default function Navbar() {
           <a href="/" className="font-display text-2xl text-[#ecc744] tracking-[-0.03em] leading-none">
             강냉이.com
           </a>
-          <button onClick={closeMenu} className="w-6 h-6 flex flex-col justify-between py-[3px]" aria-label="메뉴 닫기">
+          <button onClick={closeMenu} className="w-6 h-6 flex flex-col justify-between py-[3px] cursor-pointer" aria-label="메뉴 닫기">
             <span className="block w-full h-[1.5px] bg-white rounded-full rotate-45 translate-y-[8px]" />
             <span className="block w-full h-[1.5px] bg-white rounded-full opacity-0" />
             <span className="block w-full h-[1.5px] bg-white rounded-full -rotate-45 -translate-y-[8px]" />
@@ -116,10 +151,31 @@ export default function Navbar() {
         <nav className="flex flex-col gap-8 font-sans font-medium text-2xl text-white tracking-[-0.03em]">
           <a href="/"      onClick={closeMenu} className="menu-item hover:text-[#ecc744] transition-colors duration-200">Home</a>
           <a href="/cases" onClick={closeMenu} className="menu-item hover:text-[#ecc744] transition-colors duration-200">제작 케이스</a>
-          <a href="/"      onClick={closeMenu} className="menu-item hover:text-[#ecc744] transition-colors duration-200">기공장비</a>
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              if (pathname === "/") {
+                closeMenu();
+                setTimeout(() => {
+                  const el = document.getElementById("equipment");
+                  if (el) {
+                    const offset = window.innerWidth >= 768 ? 80 : 32;
+                    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset, behavior: "smooth" });
+                  }
+                }, 500);
+              } else {
+                sessionStorage.setItem("scrollTo", "equipment");
+                window.location.href = "/";
+              }
+            }}
+            className="menu-item hover:text-[#ecc744] transition-colors duration-200"
+          >기공장비</a>
         </nav>
         <div className="mt-auto menu-item">
-          <CTAButton className="w-full h-12" onClick={closeMenu}>비즈니스 제휴 문의</CTAButton>
+          <a href="/contact?inquiry=비즈니스 제휴 문의" onClick={closeMenu} className="w-full">
+            <SecondaryButton className="w-full h-12">비즈니스 제휴 문의</SecondaryButton>
+          </a>
         </div>
       </div>
 
@@ -132,14 +188,31 @@ export default function Navbar() {
           <nav className="hidden md:flex items-center gap-14 font-sans font-medium text-base tracking-[-0.02em]">
             <NavLink href="/">Home</NavLink>
             <NavLink href="/cases">제작 케이스</NavLink>
-            <NavLink href="/">기공장비</NavLink>
+            <NavLink
+              href={pathname === "/" ? "#equipment" : "/#equipment"}
+              onClick={(e) => {
+                e.preventDefault();
+                if (pathname === "/") {
+                  const el = document.getElementById("equipment");
+                  if (el) {
+                    const offset = window.innerWidth >= 768 ? 80 : 32;
+                    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset, behavior: "smooth" });
+                  }
+                } else {
+                  sessionStorage.setItem("scrollTo", "equipment");
+                  window.location.href = "/";
+                }
+              }}
+            >기공장비</NavLink>
           </nav>
           <div className="hidden md:block w-[215px]">
-            <CTAButton className="w-full h-12">비즈니스 제휴 문의</CTAButton>
+            <a href="/contact?inquiry=비즈니스 제휴 문의">
+              <SecondaryButton className="w-full h-12">비즈니스 제휴 문의</SecondaryButton>
+            </a>
           </div>
           <button
             onClick={openMenu}
-            className="md:hidden w-6 h-6 flex flex-col justify-between py-[3px] relative z-[60]"
+            className="md:hidden w-6 h-6 flex flex-col justify-between py-[3px] relative z-[60] cursor-pointer"
             aria-label="메뉴 열기"
           >
             <span ref={bar1} className="block w-full h-[1.5px] bg-white rounded-full" />

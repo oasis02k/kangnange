@@ -8,20 +8,24 @@ const INTERVAL_MS = 2800;
 
 const REVIEWS = [
   {
-    title: '”좋은 치료는 좋은 기공물에서\n완성된다고 생각합니다.”',
+    title: '"좋은 치료는 좋은 기공물에서\n완성된다고 생각합니다."',
     body: "좋은 치료는 좋은 기공물에서 완성된다고 생각합니다. 늘 기공물의 완성도와 환자를 먼저 생각하는 마음으로 노력하시는 만큼 앞으로의 더 큰 발전과 번창을 진심으로 응원합니다.",
+    mobileBody: "좋은 치료는 좋은 기공물에서 완성된다고 생각합니다.\n늘 기공물의 완성도와 환자를 먼저 생각하는 마음으로 노력하시는 만큼 앞으로의 더 큰 발전과 번창을\n진심으로 응원합니다.",
     businessName: "청담세브란스치과",
     name: "권혁준",
   },
   {
-    title: "'아날로그와 디지털 모두 잘 소화해 내는 기공역량.'",
+    title: "'아날로그와 디지털\n모두 잘 소화해 내는 기공역량.'",
+    desktopTitle: "'아날로그와 디지털\n모두 잘 소화해 내는 기공역량.'",
     body: "강신일 소장님의 뛰어난 센스와 근면성실함 때문에 오랜 세월 믿고 거래해 왔습니다. 아날로그와 디지털 모두 잘 소화해 내는 기공역량을 갖추고 있을 뿐 아니라 항상 잘 소통하고 노력하는 모습이 맘에 듭니다. 앞으로도 계속 믿고 거래할 수 있는 기공소라 생각되어 다른 분께 추천드립니다.",
+    mobileBody: "강신일 소장님의 뛰어난 센스와 근면성실함\n때문에 오랜 세월 믿고 거래해 왔습니다.\n아날로그와 디지털 모두 잘 소화해 내는\n기공역량을 갖추고 있을 뿐 아니라 항상 잘 소통하고\n노력하는 모습이 맘에 듭니다.\n앞으로도 계속 믿고 거래할 수 있는 기공소라 생각되어\n다른 분께 추천드립니다.",
     businessName: "예원부부치과",
     name: "오충원 원장",
   },
   {
     title: "'임상에서의 요구를 잘 이해하고 소통이\n원활해 더욱 믿고 맡길 수 있습니다.'",
     body: "심미보철을 위해 찾게 된 기공소입니다. 처음 거래했을 때 느꼈던 성실함과 책임감을 지금까지도 변함없이 지켜오고 있습니다. 작은 디테일까지 놓치지 않고 정성껏 보철물을 제작해 주며, 임상에서의 요구를 잘 이해하고 소통이 원활해 더욱 믿고 맡길 수 있습니다.",
+    mobileBody: "심미보철을 위해 찾게 된 기공소입니다.\n처음 거래했을 때 느꼈던 성실함과 책임감을\n지금까지도 변함없이 지켜오고 있습니다.\n작은 디테일까지 놓치지 않고 정성껏 보철물을\n제작해 주며, 임상에서의 요구를 잘 이해하고 소통이\n원활해 더욱 믿고 맡길 수 있습니다.",
     businessName: "소나무치과",
     name: "김상준",
   },
@@ -39,10 +43,12 @@ function ReviewCard({ review }: { review: (typeof REVIEWS)[number] }) {
   return (
     <div className="bg-white rounded-2xl p-4 md:p-6 flex flex-col gap-4 md:gap-6 flex-1">
       <p className="font-sans font-bold text-base md:text-[20px] text-[#1c1c19] tracking-[-0.03em] leading-[1.3] whitespace-pre-wrap">
-        {review.title}
+        <span className="md:hidden">{review.title}</span>
+        <span className="hidden md:inline">{review.desktopTitle ?? review.title}</span>
       </p>
       <p className="font-sans font-normal text-sm md:text-base text-[rgba(28,28,25,0.56)] tracking-[-0.03em] leading-[1.4] flex-1">
-        {review.body}
+        <span className="md:hidden whitespace-pre-line">{review.mobileBody ?? review.body}</span>
+        <span className="hidden md:inline">{review.body}</span>
       </p>
       <div className="flex items-end justify-between w-full">
         <div className="flex items-center gap-2 flex-1 min-w-0">
@@ -173,7 +179,7 @@ export default function SectionTestimonial() {
               <button
                 key={i}
                 onClick={() => snapTo(i)}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
+                className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
                   active === i ? "w-5 bg-[#1c1c19]" : "w-1.5 bg-[rgba(28,28,25,0.2)]"
                 }`}
               />

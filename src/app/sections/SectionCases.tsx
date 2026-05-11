@@ -149,6 +149,30 @@ function CaseCard({
   );
 }
 
+function CasesLink() {
+  const arrowRef = useRef<HTMLSpanElement>(null);
+
+  const handleMouseEnter = () => {
+    gsap.timeline()
+      .to(arrowRef.current,  { x: "130%", duration: 0.18, ease: "power2.in" })
+      .set(arrowRef.current, { x: "-130%" })
+      .to(arrowRef.current,  { x: "0%",   duration: 0.22, ease: "power2.out" });
+  };
+
+  return (
+    <a
+      href="/cases"
+      onMouseEnter={handleMouseEnter}
+      className="bg-[#ecc744] hover:bg-[#E3BA27] transition-colors h-12 px-6 rounded-xl flex items-center justify-center gap-1.5 font-sans font-medium text-base text-[#1c1c19] tracking-[-0.02em] w-full md:w-auto cursor-pointer"
+    >
+      제작 케이스 보러가기
+      <span className="relative overflow-hidden inline-flex" style={{ width: "0.9em", height: "1.1em" }}>
+        <span ref={arrowRef} className="absolute inset-0 flex items-center justify-center">→</span>
+      </span>
+    </a>
+  );
+}
+
 const SLIDE_GAP = 16;
 
 export default function SectionCases() {
@@ -181,7 +205,7 @@ export default function SectionCases() {
   };
 
   return (
-    <section className="bg-white py-8 md:py-24 px-5 md:px-8">
+    <section id="cases" className="bg-white py-8 md:py-24 px-5 md:px-8">
       <div className="flex flex-col gap-6 md:gap-12 items-center w-full max-w-[1440px] mx-auto">
 
         {/* Heading */}
@@ -223,7 +247,7 @@ export default function SectionCases() {
               <button
                 key={i}
                 onClick={() => snapTo(i)}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
+                className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
                   active === i ? "w-5 bg-[#1c1c19]" : "w-1.5 bg-[rgba(28,28,25,0.2)]"
                 }`}
               />
@@ -232,9 +256,7 @@ export default function SectionCases() {
         </div>
 
         {/* CTA */}
-        <button className="bg-[#ecc744] h-12 px-6 rounded-xl flex items-center justify-center gap-1 font-sans font-medium text-base text-[#1c1c19] tracking-[-0.02em] w-full md:w-auto">
-          비즈니스 제휴 문의 →
-        </button>
+        <CasesLink />
 
       </div>
     </section>

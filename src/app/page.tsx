@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Navbar, { CTAButton } from "./components/Navbar";
 import SectionWhy from "./sections/SectionWhy";
 import SectionServices from "./sections/SectionServices";
@@ -12,6 +13,18 @@ import Footer from "./sections/Footer";
 
 /* ─── Page ──────────────────────────────────────────────────────────────── */
 export default function Home() {
+  useEffect(() => {
+    const target = sessionStorage.getItem("scrollTo");
+    if (target) {
+      sessionStorage.removeItem("scrollTo");
+      const el = document.getElementById(target);
+      if (el) {
+        const offset = window.innerWidth >= 768 ? 80 : 32;
+        window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset, behavior: "instant" });
+      }
+    }
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -47,9 +60,11 @@ export default function Home() {
             <span className="md:hidden whitespace-pre-line">{"구강스캐너 데이터 기반으로\n모델리스 제작을 지원합니다."}</span>
             <span className="hidden md:inline">구강스캐너 데이터 기반으로 모델리스 제작을 지원합니다.</span>
           </p>
-          <CTAButton className="mt-2 w-full md:w-[215px] h-12">
-            케이스 의뢰 하기
-          </CTAButton>
+          <a href="/contact?inquiry=케이스 의뢰하기" className="mt-2 w-full md:w-[215px]">
+            <CTAButton className="w-full h-12">
+              케이스 의뢰 하기
+            </CTAButton>
+          </a>
         </div>
 
       </section>

@@ -77,7 +77,7 @@ export default function CasesClient({ cases }: { cases: SanityCase[] }) {
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
-                  className={`shrink-0 h-9 px-4 rounded-lg font-sans font-medium text-base tracking-[-0.02em] leading-[1.2] transition-colors ${
+                  className={`shrink-0 h-9 px-4 rounded-lg font-sans font-medium text-base tracking-[-0.02em] leading-[1.2] transition-colors cursor-pointer ${
                     activeTab === tab
                       ? "bg-[#ecc744] text-[#1c1c19]"
                       : "bg-white text-[rgba(28,28,25,0.56)] border border-[rgba(28,28,25,0.1)] hover:border-[rgba(28,28,25,0.3)]"

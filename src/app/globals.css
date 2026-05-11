@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+html {
+  scroll-behavior: smooth;
+}
+
+.pin-spacer {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
 @theme inline {
   --font-display: var(--font-a2z);
   --font-sans: var(--font-noto-sans-kr);

@@ -131,7 +131,7 @@ export default function SectionWorkflow() {
   };
 
   return (
-    <section className="bg-white py-8 md:py-24 px-5 md:px-8">
+    <section id="workflow" className="bg-white py-8 md:py-24 px-5 md:px-8">
       <div className="flex flex-col gap-6 md:gap-12 items-center w-full max-w-[1440px] mx-auto">
 
         {/* Heading */}
@@ -255,7 +255,7 @@ export default function SectionWorkflow() {
               <button
                 key={i}
                 onClick={() => { setActive(i); startAutoPlay(); }}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
+                className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
                   active === i ? "w-5 bg-[#1c1c19]" : "w-1.5 bg-[rgba(28,28,25,0.2)]"
                 }`}
               />

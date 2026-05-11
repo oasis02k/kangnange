@@ -1,7 +1,31 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+
+function useScrollNav() {
+  const pathname = usePathname();
+
+  return (sectionId: string) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (pathname === "/") {
+      const el = document.getElementById(sectionId);
+      if (el) {
+        const offset = window.innerWidth >= 768 ? 80 : 32;
+        window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset, behavior: "smooth" });
+      }
+    } else {
+      sessionStorage.setItem("scrollTo", sectionId);
+      window.location.href = "/";
+    }
+  };
+}
+
 export default function Footer() {
+  const scrollTo = useScrollNav();
+
   return (
-    <footer className="bg-[#1c1c19] overflow-hidden">
-      <div className="max-w-[1440px] mx-auto px-5 md:px-8 pt-8 md:pt-24">
+    <footer className="bg-[#1c1c19]">
+      <div className="max-w-[1440px] mx-auto px-5 md:px-8 pt-8 md:pt-24 pb-8 md:pb-12">
 
         {/* Logo */}
         <div className="flex items-center gap-2 text-[#ecc744] tracking-[-0.03em] mb-6 md:mb-8">
@@ -22,10 +46,10 @@ export default function Footer() {
               Links
             </p>
             <div className="flex flex-col gap-4 font-sans font-normal text-base text-[rgba(236,199,68,0.72)] tracking-[-0.03em] leading-[1.4]">
-              <span>Services</span>
-              <span>Workflow</span>
-              <span>Cases</span>
-              <span>Contact</span>
+              <a href="#services" onClick={scrollTo("services")} className="hover:text-[#ecc744] transition-colors duration-200 cursor-pointer">Services</a>
+              <a href="#workflow" onClick={scrollTo("workflow")} className="hover:text-[#ecc744] transition-colors duration-200 cursor-pointer">Workflow</a>
+              <a href="#cases"    onClick={scrollTo("cases")}    className="hover:text-[#ecc744] transition-colors duration-200 cursor-pointer">Cases</a>
+              <a href="/contact" className="hover:text-[#ecc744] transition-colors duration-200">Contact</a>
             </div>
           </div>
 
@@ -62,7 +86,7 @@ export default function Footer() {
         <img
           src="/footer/wordmark.svg"
           alt="강냉이.com"
-          className="w-full mt-8 md:mt-12 translate-y-[18%]"
+          className="w-full mt-8 md:mt-12"
         />
 
       </div>
