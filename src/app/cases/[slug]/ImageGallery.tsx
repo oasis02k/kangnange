@@ -9,11 +9,11 @@ export default function ImageGallery({ images }: { images: string[] }) {
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="w-full rounded-2xl overflow-hidden bg-black flex items-center justify-center">
+      <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden bg-black">
         <img
           src={images[active]}
           alt=""
-          className="w-full h-auto max-h-[80vh] object-contain transition-opacity duration-300"
+          className="absolute inset-0 w-full h-full object-contain transition-opacity duration-300"
         />
       </div>
 
