@@ -7,31 +7,37 @@ const SERVICES = [
   {
     title: "Crown",
     description: "자연치아에 가까운 컨택·마진·교합을 목표로 제작합니다.",
+    desktopDescription: "자연치아에 가까운 컨택·마진·교합을\n목표로 제작합니다.",
     image: "/services/crown.jpg",
   },
   {
     title: "Implant",
     description: "케이스에 맞는 교합/에머전스/스크류홀 위치를 고려해 디자인합니다.",
+    desktopDescription: "케이스에 맞는 교합/에머전스/스크류홀\n위치를 고려해 디자인합니다.",
     image: "/services/implant.jpg",
   },
   {
     title: "Denture",
     description: "전체/부분 덴쳐 케이스를 진행합니다. (단계별 피드백 기반)",
+    desktopDescription: "전체/부분 덴쳐 케이스를 진행합니다.\n(단계별 피드백 기반)",
     image: "/services/denture.jpg",
   },
   {
     title: "Ortho",
     description: "교정 장치/모델 등 요청 스펙에 맞춰 제작합니다.",
+    desktopDescription: "교정 장치/모델 등\n요청 스펙에 맞춰 제작합니다.",
     image: "/services/ortho.jpg",
   },
   {
     title: "Esthetic",
     description: "색/텍스처/형태 재현을 우선으로 심미 케이스를 제작합니다.",
+    desktopDescription: "색/텍스처/형태 재현을 우선으로\n심미 케이스를 제작합니다.",
     image: "/services/esthetic.jpg",
   },
   {
     title: "Digital Modeless",
     description: "구강스캔 기반으로 모델리스 제작 흐름을 지원합니다.",
+    desktopDescription: "구강스캔 기반으로 모델리스\n제작 흐름을 지원합니다.",
     image: "/services/digital-modeless.jpg",
   },
 ];
@@ -93,7 +99,8 @@ function ServiceCard({ service }: { service: (typeof SERVICES)[number] }) {
           {service.title}
         </p>
         <p className="font-sans font-normal text-base md:text-[18px] text-[rgba(28,28,25,0.56)] tracking-[-0.03em] leading-[1.4]">
-          {service.description}
+          <span className="md:hidden">{service.description}</span>
+          <span className="hidden md:inline whitespace-pre-line">{service.desktopDescription}</span>
         </p>
       </div>
     </div>

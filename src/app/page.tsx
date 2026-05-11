@@ -44,7 +44,7 @@ export default function Home() {
             {"스캔 데이터로 정확하게.\n납기와 품질을 지키는 기공소"}
           </h1>
           <p className="font-sans font-normal text-base md:text-[18px] text-white tracking-[-0.03em] leading-[1.4]">
-            <span className="md:hidden">{"구강스캐너 데이터 기반으로\n모델리스 제작을 지원합니다."}</span>
+            <span className="md:hidden whitespace-pre-line">{"구강스캐너 데이터 기반으로\n모델리스 제작을 지원합니다."}</span>
             <span className="hidden md:inline">구강스캐너 데이터 기반으로 모델리스 제작을 지원합니다.</span>
           </p>
           <CTAButton className="mt-2 w-full md:w-[215px] h-12">

@@ -46,6 +46,13 @@ export default function SectionWhy() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
+    const onRefreshInit = () => {
+      if (sectionRef.current) {
+        gsap.set(sectionRef.current, { clearProps: "width" });
+      }
+    };
+    ScrollTrigger.addEventListener("refreshInit", onRefreshInit);
+
     const mm = gsap.matchMedia();
 
     mm.add("(min-width: 768px)", () => {
@@ -64,6 +71,7 @@ export default function SectionWhy() {
             pin: true,
             scrub: 1,
             anticipatePin: 1,
+            invalidateOnRefresh: true,
           },
         }
       );
@@ -85,12 +93,16 @@ export default function SectionWhy() {
             pin: true,
             scrub: 1,
             anticipatePin: 1,
+            invalidateOnRefresh: true,
           },
         }
       );
     });
 
-    return () => mm.revert();
+    return () => {
+      ScrollTrigger.removeEventListener("refreshInit", onRefreshInit);
+      mm.revert();
+    };
   }, []);
 
   return (

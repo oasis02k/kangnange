@@ -39,6 +39,8 @@ function formatPhone(raw: string): string {
   return `${d.slice(0, 3)}-${d.slice(3, 7)}-${d.slice(7, 11)}`;
 }
 
+const FORMSPARK_URL = "https://submit-form.com/kTMor2SGP";
+
 export default function SectionContact() {
   const [clinicName, setClinicName] = useState("");
   const [phone, setPhone] = useState("");
@@ -46,6 +48,7 @@ export default function SectionContact() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [fileName, setFileName] = useState("");
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const fileRef  = useRef<HTMLInputElement>(null);
   const fillRef  = useRef<HTMLSpanElement>(null);
   const arrowRef = useRef<HTMLSpanElement>(null);
@@ -66,8 +69,35 @@ export default function SectionContact() {
     gsap.to(fillRef.current, { xPercent: 101, duration: 0.45, ease: "power3.in" });
   };
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (!isValid || status === "submitting") return;
+    setStatus("submitting");
+
+    const formData = new FormData();
+    formData.append("치과명", clinicName);
+    formData.append("연락처", phone);
+    if (name)    formData.append("이름", name);
+    if (email)   formData.append("이메일", email);
+    if (message) formData.append("문의사항", message);
+    if (fileRef.current?.files?.[0]) formData.append("이미지", fileRef.current.files[0]);
+
+    try {
+      const res = await fetch(FORMSPARK_URL, {
+        method: "POST",
+        body: formData,
+        headers: { Accept: "application/json" },
+      });
+      if (res.ok) {
+        setStatus("success");
+        setClinicName(""); setPhone(""); setName(""); setEmail(""); setMessage(""); setFileName("");
+        if (fileRef.current) fileRef.current.value = "";
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
   }
 
   return (
@@ -111,6 +141,8 @@ export default function SectionContact() {
             onSubmit={handleSubmit}
             className="flex flex-col gap-6 p-4 md:p-8 flex-1"
           >
+            {/* honeypot — keeps bots out */}
+            <input type="text" name="_gotcha" className="hidden" tabIndex={-1} autoComplete="off" />
             <Field label="치과명" required>
               <input
                 type="text"
@@ -182,19 +214,32 @@ export default function SectionContact() {
               </div>
             </Field>
 
+            {status === "success" && (
+              <p className="text-center font-sans font-medium text-base text-green-600 tracking-[-0.02em]">
+                문의가 접수되었습니다. 빠르게 답변드릴게요!
+              </p>
+            )}
+            {status === "error" && (
+              <p className="text-center font-sans font-medium text-base text-[#f52b2b] tracking-[-0.02em]">
+                전송에 실패했습니다. 잠시 후 다시 시도해 주세요.
+              </p>
+            )}
+
             <button
               type="submit"
-              disabled={!isValid}
+              disabled={!isValid || status === "submitting"}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
-              className={`relative overflow-hidden w-full h-14 rounded-full font-sans font-medium text-[20px] text-[#1c1c19] tracking-[-0.03em] leading-none bg-[#ecc744] transition-opacity ${isValid ? "opacity-100" : "opacity-40 cursor-not-allowed"}`}
+              className={`relative overflow-hidden w-full h-14 rounded-full font-sans font-medium text-[20px] text-[#1c1c19] tracking-[-0.03em] leading-none bg-[#ecc744] transition-opacity ${isValid && status !== "submitting" ? "opacity-100" : "opacity-40 cursor-not-allowed"}`}
             >
               <span ref={fillRef} className="absolute inset-0 bg-[#f0c830]" style={{ transform: "translateX(-101%)" }} />
               <span className="relative z-10 flex items-center justify-center gap-1.5">
-                보내기
-                <span className="relative overflow-hidden inline-flex" style={{ width: "0.9em", height: "1.1em" }}>
-                  <span ref={arrowRef} className="absolute inset-0 flex items-center justify-center">→</span>
-                </span>
+                {status === "submitting" ? "전송 중..." : "보내기"}
+                {status !== "submitting" && (
+                  <span className="relative overflow-hidden inline-flex" style={{ width: "0.9em", height: "1.1em" }}>
+                    <span ref={arrowRef} className="absolute inset-0 flex items-center justify-center">→</span>
+                  </span>
+                )}
               </span>
             </button>
           </form>
