@@ -1,7 +1,9 @@
 "use client";
 
-import { useState, useRef, useLayoutEffect } from "react";
+import { useState, useRef, useLayoutEffect, useEffect, useCallback } from "react";
 import gsap from "gsap";
+
+const INTERVAL_MS = 3000;
 
 const CASES = [
   {
@@ -180,6 +182,8 @@ export default function SectionCases() {
   const containerRef = useRef<HTMLDivElement>(null);
   const trackRef     = useRef<HTMLDivElement>(null);
   const touchStartX  = useRef(0);
+  const isPaused     = useRef(false);
+  const intervalRef  = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const slideWidth = () =>
     containerRef.current ? containerRef.current.offsetWidth + SLIDE_GAP : 0;
@@ -189,8 +193,26 @@ export default function SectionCases() {
     setActive(index);
   };
 
+  const startAutoPlay = useCallback(() => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      if (!isPaused.current)
+        setActive(prev => (prev + 1) % CASES.length);
+    }, INTERVAL_MS);
+  }, []);
+
+  useEffect(() => {
+    startAutoPlay();
+    return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
+  }, [startAutoPlay]);
+
+  useEffect(() => {
+    gsap.to(trackRef.current, { x: -active * slideWidth(), duration: 0.45, ease: "power3.inOut" });
+  }, [active]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const onTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
+    isPaused.current = true;
     gsap.killTweensOf(trackRef.current);
   };
   const onTouchMove = (e: React.TouchEvent) => {
@@ -199,9 +221,11 @@ export default function SectionCases() {
   };
   const onTouchEnd = (e: React.TouchEvent) => {
     const dx = e.changedTouches[0].clientX - touchStartX.current;
+    isPaused.current = false;
     if (dx < -50) snapTo(Math.min(active + 1, CASES.length - 1));
     else if (dx > 50) snapTo(Math.max(active - 1, 0));
     else snapTo(active);
+    startAutoPlay();
   };
 
   return (
@@ -246,7 +270,7 @@ export default function SectionCases() {
             {CASES.map((_, i) => (
               <button
                 key={i}
-                onClick={() => snapTo(i)}
+                onClick={() => { snapTo(i); startAutoPlay(); }}
                 className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
                   active === i ? "w-5 bg-[#1c1c19]" : "w-1.5 bg-[rgba(28,28,25,0.2)]"
                 }`}
