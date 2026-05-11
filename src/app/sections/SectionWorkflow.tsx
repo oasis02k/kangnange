@@ -30,6 +30,27 @@ const STEPS = [
   },
 ];
 
+function FlowPill() {
+  const a1 = useRef<HTMLSpanElement>(null);
+  const a2 = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const t1 = gsap.fromTo(a1.current, { x: -4 }, { x: 4, duration: 1.6, ease: "sine.inOut", repeat: -1, yoyo: true });
+    const t2 = gsap.fromTo(a2.current, { x: -4 }, { x: 4, duration: 1.6, ease: "sine.inOut", repeat: -1, yoyo: true, delay: 0.4 });
+    return () => { t1.kill(); t2.kill(); };
+  }, []);
+
+  return (
+    <div className="bg-[#f0f0f0] flex items-center justify-center gap-6 md:gap-12 px-6 md:px-12 py-4 md:py-6 rounded-full w-full md:w-auto">
+      <span className="font-sans font-medium text-[20px] md:text-[32px] text-[#1c1c19] tracking-[-0.03em] leading-[1.2]">의뢰</span>
+      <span ref={a1} className="font-sans font-bold text-2xl text-[#1c1c19] leading-[1.2]">→</span>
+      <span className="font-sans font-medium text-[20px] md:text-[32px] text-[#1c1c19] tracking-[-0.03em] leading-[1.2]">제작</span>
+      <span ref={a2} className="font-sans font-bold text-2xl text-[#1c1c19] leading-[1.2]">→</span>
+      <span className="font-sans font-medium text-[20px] md:text-[32px] text-[#1c1c19] tracking-[-0.03em] leading-[1.2]">배송</span>
+    </div>
+  );
+}
+
 const INTERVAL_MS = 2500;
 
 export default function SectionWorkflow() {
@@ -145,13 +166,7 @@ export default function SectionWorkflow() {
         </div>
 
         {/* Flow pill */}
-        <div className="bg-[#ecc744] flex items-center justify-center gap-6 md:gap-12 px-6 md:px-12 py-4 md:py-6 rounded-full w-full md:w-auto">
-          <span className="font-sans font-medium text-[20px] md:text-[32px] text-[#1c1c19] tracking-[-0.03em] leading-[1.2]">의뢰</span>
-          <span className="font-sans font-bold text-2xl text-[#1c1c19] leading-[1.2]">→</span>
-          <span className="font-sans font-medium text-[20px] md:text-[32px] text-[#1c1c19] tracking-[-0.03em] leading-[1.2]">제작</span>
-          <span className="font-sans font-bold text-2xl text-[#1c1c19] leading-[1.2]">→</span>
-          <span className="font-sans font-medium text-[20px] md:text-[32px] text-[#1c1c19] tracking-[-0.03em] leading-[1.2]">배송</span>
-        </div>
+        <FlowPill />
 
         {/* ── Desktop: 4 cards ── */}
         <div
