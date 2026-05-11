@@ -50,6 +50,12 @@ export const caseType = defineType({
       type: "text",
       rows: 4,
     }),
+    defineField({
+      name: "details",
+      title: "상세 정보",
+      type: "text",
+      rows: 6,
+    }),
   ],
   preview: {
     select: { title: "title", subtitle: "category", media: "images.0" },
