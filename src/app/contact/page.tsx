@@ -66,20 +66,20 @@ export default function ContactPage() {
     if (!isValid || status === "submitting") return;
     setStatus("submitting");
 
-    const formData = new FormData();
-    if (inquiry) formData.append("문의유형", inquiry);
-    formData.append("치과명", clinicName);
-    formData.append("연락처", phone);
-    if (name)    formData.append("이름", name);
-    if (email)   formData.append("이메일", email);
-    if (message) formData.append("문의사항", message);
-    if (fileRef.current?.files?.[0]) formData.append("이미지", fileRef.current.files[0]);
+    const payload: Record<string, string> = {
+      "치과명": clinicName,
+      "연락처": phone,
+    };
+    if (inquiry) payload["문의유형"] = inquiry;
+    if (name)    payload["이름"] = name;
+    if (email)   payload["이메일"] = email;
+    if (message) payload["문의사항"] = message;
 
     try {
       const res = await fetch(FORMSPARK_URL, {
         method: "POST",
-        body: formData,
-        headers: { Accept: "application/json" },
+        body: JSON.stringify(payload),
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
       });
       if (res.ok) {
         setStatus("success");
