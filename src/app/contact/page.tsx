@@ -76,25 +76,21 @@ export default function ContactPage() {
     if (message) payload["문의사항"] = message;
 
     const file = fileRef.current?.files?.[0];
-    let fetchBody: FormData | string;
-    let fetchHeaders: HeadersInit;
-
-    if (file) {
-      const fd = new FormData();
-      Object.entries(payload).forEach(([k, v]) => fd.append(k, v));
-      fd.append("이미지", file);
-      fetchBody = fd;
-      fetchHeaders = { Accept: "application/json" };
-    } else {
-      fetchBody = JSON.stringify(payload);
-      fetchHeaders = { "Content-Type": "application/json", Accept: "application/json" };
+    if (file && file.size <= 2 * 1024 * 1024) {
+      const base64 = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+      payload["이미지"] = base64;
     }
 
     try {
       const res = await fetch(FORMSPARK_URL, {
         method: "POST",
-        body: fetchBody,
-        headers: fetchHeaders,
+        body: JSON.stringify(payload),
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
       });
       if (res.ok) {
         setStatus("success");
