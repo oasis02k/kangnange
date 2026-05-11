@@ -109,7 +109,8 @@ export default function SectionContact() {
               alt=""
               className="absolute inset-0 w-full h-full object-cover"
             />
-            <div className="relative bg-black/45 flex flex-col gap-4 px-6 pt-6 pb-8 md:pb-12">
+            <div className="absolute inset-0 bg-black/45" />
+            <div className="relative flex flex-col gap-4 px-6 pt-6 pb-8 md:pb-12">
               <p className="font-sans font-medium text-[18px] md:text-[32px] text-white tracking-[-0.03em] leading-[1.2]">
                 안녕하세요 강냉이.com 입니다.
               </p>
