@@ -70,10 +70,11 @@ function FloatBtn({ children, href, variant = "primary", icon }: {
 export default function FloatingButtons() {
   const pathname = usePathname();
   const [visible, setVisible] = useState(false);
-
-  if (pathname.startsWith("/studio")) return null;
+  const isStudio = pathname.startsWith("/studio");
 
   useEffect(() => {
+    if (isStudio) return;
+
     const isDesktop = () => window.innerWidth >= 768;
 
     if (isDesktop()) {
@@ -99,7 +100,9 @@ export default function FloatingButtons() {
       window.removeEventListener("scroll", check);
       window.removeEventListener("resize", onResize);
     };
-  }, []);
+  }, [isStudio]);
+
+  if (isStudio) return null;
 
   return (
     <div
