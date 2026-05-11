@@ -49,7 +49,7 @@ export default function SectionContact() {
   const [fileName, setFileName] = useState("");
   const [inquiry, setInquiry] = useState("");
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
-  const fileRef = useRef<HTMLInputElement>(null); // kept for UI only
+  const fileRef = useRef<HTMLInputElement>(null);
 
   const isValid = clinicName.trim() !== "" && phone.trim() !== "";
 
@@ -67,11 +67,26 @@ export default function SectionContact() {
     if (email)   payload["이메일"] = email;
     if (message) payload["문의사항"] = message;
 
+    const file = fileRef.current?.files?.[0];
+    let fetchBody: FormData | string;
+    let fetchHeaders: HeadersInit;
+
+    if (file) {
+      const fd = new FormData();
+      Object.entries(payload).forEach(([k, v]) => fd.append(k, v));
+      fd.append("이미지", file);
+      fetchBody = fd;
+      fetchHeaders = { Accept: "application/json" };
+    } else {
+      fetchBody = JSON.stringify(payload);
+      fetchHeaders = { "Content-Type": "application/json", Accept: "application/json" };
+    }
+
     try {
       const res = await fetch(FORMSPARK_URL, {
         method: "POST",
-        body: JSON.stringify(payload),
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: fetchBody,
+        headers: fetchHeaders,
       });
       if (res.ok) {
         setStatus("success");
