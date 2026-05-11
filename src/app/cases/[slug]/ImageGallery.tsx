@@ -23,13 +23,13 @@ export default function ImageGallery({ images }: { images: string[] }) {
             <button
               key={i}
               onClick={() => setActive(i)}
-              className={`relative aspect-[16/9] rounded-xl overflow-hidden bg-[#e8e8e6] ring-2 transition-all duration-200 cursor-pointer ${
+              className={`relative aspect-[16/9] rounded-xl overflow-hidden bg-black ring-2 transition-all duration-200 cursor-pointer ${
                 i === active
                   ? "ring-[#ecc744]"
                   : "ring-transparent hover:ring-[rgba(28,28,25,0.2)]"
               }`}
             >
-              <img src={img} alt="" className="absolute inset-0 w-full h-full object-cover" />
+              <img src={img} alt="" className="absolute inset-0 w-full h-full object-contain" />
             </button>
           ))}
         </div>
