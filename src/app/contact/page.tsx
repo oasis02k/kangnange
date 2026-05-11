@@ -108,19 +108,19 @@ export default function ContactPage() {
           <div className="bg-white rounded-3xl overflow-hidden w-full md:max-w-[1000px] mx-auto flex flex-col md:flex-row">
 
               {/* Left: image + greeting */}
-              <div className="relative flex flex-col justify-end md:w-[500px] shrink-0 min-h-[240px] md:min-h-0">
+              <div className="relative flex flex-col justify-end md:w-[500px] shrink-0 h-[140px] md:h-auto">
                 <img
                   src="/contact/hero.jpg"
                   alt=""
                   className="absolute inset-0 w-full h-full object-cover"
                 />
-                <div className="relative bg-[rgba(28,28,25,0.72)] flex flex-col gap-4 px-6 pt-6 pb-8 md:pb-12">
-                  <p className="font-sans font-medium text-2xl md:text-[32px] text-white tracking-[-0.03em] leading-[1.2]">
+                <div className="relative bg-black/45 flex flex-col gap-4 px-6 pt-6 pb-8 md:pb-12">
+                  <p className="font-sans font-medium text-[18px] md:text-[32px] text-white tracking-[-0.03em] leading-[1.2]">
                     안녕하세요 강냉이.com 입니다.
                   </p>
-                  <p className="font-sans font-normal text-base md:text-[18px] text-white/[0.74] tracking-[-0.03em] leading-[1.4]">
-                    궁금한 점이 있으면 언제든 메시지 주세요,{" "}
-                    <br className="hidden md:block" />
+                  <p className="font-sans font-normal text-base md:text-[18px] text-white tracking-[-0.03em] leading-[1.4]">
+                    궁금한 점이 있으면 언제든 메시지 주세요,
+                    <br />
                     확인 후 빠르게 답변드릴게요.
                   </p>
                 </div>
