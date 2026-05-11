@@ -133,7 +133,7 @@ export default function ContactPage() {
                 className="flex flex-col gap-6 p-4 md:p-8 flex-1"
               >
                 {/* honeypot */}
-                <input type="text" name="_gotcha" className="hidden" tabIndex={-1} autoComplete="off" />
+                <input type="text" name="_honey" style={{ display: "none" }} tabIndex={-1} autoComplete="off" aria-hidden="true" />
 
                 <Field label="문의유형">
                   <div className="relative">
