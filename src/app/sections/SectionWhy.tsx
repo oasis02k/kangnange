@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const DESKTOP_LINES = [
   "강냉이.com은 CAD/CAM 기반으로 작업하는 디지털 기공소입니다.",
@@ -44,66 +45,65 @@ export default function SectionWhy() {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    let mm: ReturnType<typeof gsap.matchMedia>;
+    gsap.registerPlugin(ScrollTrigger);
 
-    import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
-      gsap.registerPlugin(ScrollTrigger);
+    const onRefreshInit = () => {
+      if (sectionRef.current) {
+        gsap.set(sectionRef.current, { clearProps: "width" });
+      }
+    };
+    ScrollTrigger.addEventListener("refreshInit", onRefreshInit);
 
-      const onRefreshInit = () => {
-        if (sectionRef.current) {
-          gsap.set(sectionRef.current, { clearProps: "width" });
+    const mm = gsap.matchMedia();
+
+    mm.add("(min-width: 768px)", () => {
+      const words = sectionRef.current!.querySelectorAll("[data-desktop-word]");
+      gsap.fromTo(
+        words,
+        { color: "rgba(255,255,255,0.15)" },
+        {
+          color: "rgba(255,255,255,1)",
+          stagger: 0.1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: "+=2500",
+            pin: true,
+            scrub: 1,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          },
         }
-      };
-      ScrollTrigger.addEventListener("refreshInit", onRefreshInit);
-
-      mm = gsap.matchMedia();
-
-      mm.add("(min-width: 768px)", () => {
-        const words = sectionRef.current!.querySelectorAll("[data-desktop-word]");
-        gsap.fromTo(
-          words,
-          { color: "rgba(255,255,255,0.15)" },
-          {
-            color: "rgba(255,255,255,1)",
-            stagger: 0.1,
-            ease: "none",
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: "top top",
-              end: "+=2500",
-              pin: true,
-              scrub: 1,
-              anticipatePin: 1,
-              invalidateOnRefresh: true,
-            },
-          }
-        );
-      });
-
-      mm.add("(max-width: 767px)", () => {
-        const words = sectionRef.current!.querySelectorAll("[data-mobile-word]");
-        gsap.fromTo(
-          words,
-          { color: "rgba(255,255,255,0.15)" },
-          {
-            color: "rgba(255,255,255,1)",
-            stagger: 0.1,
-            ease: "none",
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: "top top",
-              end: "+=2500",
-              pin: true,
-              scrub: 1,
-              anticipatePin: 1,
-              invalidateOnRefresh: true,
-            },
-          }
-        );
-      });
+      );
     });
 
-    return () => { mm?.revert(); };
+    mm.add("(max-width: 767px)", () => {
+      const words = sectionRef.current!.querySelectorAll("[data-mobile-word]");
+      gsap.fromTo(
+        words,
+        { color: "rgba(255,255,255,0.15)" },
+        {
+          color: "rgba(255,255,255,1)",
+          stagger: 0.1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: "+=2500",
+            pin: true,
+            scrub: 1,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          },
+        }
+      );
+    });
+
+    return () => {
+      ScrollTrigger.removeEventListener("refreshInit", onRefreshInit);
+      mm.revert();
+    };
   }, []);
 
   return (
