@@ -106,7 +106,7 @@ export default function Navbar() {
   const isOpen  = useRef(false);
 
   const openMenu = () => {
-    if (isOpen.current || window.innerWidth >= 810) return;
+    if (isOpen.current || window.innerWidth >= 768) return;
     isOpen.current = true;
     gsap.to(bar1.current, { y: 8,  rotate: 45,  duration: 0.35, ease: "power2.inOut" });
     gsap.to(bar2.current, { opacity: 0, scaleX: 0, duration: 0.2 });
@@ -185,7 +185,7 @@ export default function Navbar() {
           <a href="/" className="font-display text-2xl text-[#ecc744] tracking-[-0.03em] leading-none shrink-0">
             강냉이.com
           </a>
-          <nav className="hidden tablet:flex items-center gap-14 font-sans font-medium text-base tracking-[-0.02em]">
+          <nav className="hidden md:flex items-center gap-14 font-sans font-medium text-base tracking-[-0.02em]">
             <NavLink href="/">Home</NavLink>
             <NavLink href="/cases">제작 케이스</NavLink>
             <NavLink
@@ -205,14 +205,15 @@ export default function Navbar() {
               }}
             >기공장비</NavLink>
           </nav>
-          <div className="hidden tablet:block w-[215px]">
+          <div className="hidden md:block w-[215px]">
             <a href="/contact?inquiry=비즈니스 제휴 문의">
               <SecondaryButton className="w-full h-12">비즈니스 제휴 문의</SecondaryButton>
             </a>
           </div>
           <button
             onClick={openMenu}
-            className="tablet:hidden w-6 h-6 flex flex-col justify-between py-[3px] relative z-[60] cursor-pointer"
+            className="md:hidden w-6 h-6 flex flex-col justify-between py-[3px] relative z-[60] cursor-pointer touch-action-manipulation"
+            style={{ touchAction: "manipulation" }}
             aria-label="메뉴 열기"
           >
             <span ref={bar1} className="block w-full h-[1.5px] bg-white rounded-full" />
