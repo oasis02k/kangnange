@@ -79,7 +79,7 @@ export default async function CaseDetailPage({
               <ImageGallery images={item.images} />
 
               {item.details && (
-                <p className="font-sans font-normal text-base md:text-[18px] text-[#1c1c19] tracking-[-0.03em] leading-[1.6] whitespace-pre-wrap">
+                <p className="font-sans font-normal text-base md:text-[18px] text-[rgba(28,28,25,0.56)] tracking-[-0.03em] leading-[1.6] whitespace-pre-wrap">
                   {item.details}
                 </p>
               )}
