@@ -19,7 +19,7 @@ export default function Home() {
       sessionStorage.removeItem("scrollTo");
       const el = document.getElementById(target);
       if (el) {
-        const offset = window.innerWidth >= 768 ? 80 : 32;
+        const offset = window.innerWidth >= 810 ? 80 : 32;
         window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset, behavior: "instant" });
       }
     }

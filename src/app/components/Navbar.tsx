@@ -106,7 +106,7 @@ export default function Navbar() {
   const isOpen  = useRef(false);
 
   const openMenu = () => {
-    if (isOpen.current) return;
+    if (isOpen.current || window.innerWidth >= 810) return;
     isOpen.current = true;
     gsap.to(bar1.current, { y: 8,  rotate: 45,  duration: 0.35, ease: "power2.inOut" });
     gsap.to(bar2.current, { opacity: 0, scaleX: 0, duration: 0.2 });
@@ -160,7 +160,7 @@ export default function Navbar() {
                 setTimeout(() => {
                   const el = document.getElementById("equipment");
                   if (el) {
-                    const offset = window.innerWidth >= 768 ? 80 : 32;
+                    const offset = window.innerWidth >= 810 ? 80 : 32;
                     window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset, behavior: "smooth" });
                   }
                 }, 500);
@@ -181,11 +181,11 @@ export default function Navbar() {
 
       {/* Fixed header */}
       <header className="fixed top-0 left-0 right-0 z-40 h-20 bg-[#0B0B0C] border-b border-white/[0.32]">
-        <div className="flex items-center justify-between h-full px-5 md:px-8">
+        <div className="flex items-center justify-between h-full px-5 tablet:px-8">
           <a href="/" className="font-display text-2xl text-[#ecc744] tracking-[-0.03em] leading-none shrink-0">
             강냉이.com
           </a>
-          <nav className="hidden md:flex items-center gap-14 font-sans font-medium text-base tracking-[-0.02em]">
+          <nav className="hidden tablet:flex items-center gap-14 font-sans font-medium text-base tracking-[-0.02em]">
             <NavLink href="/">Home</NavLink>
             <NavLink href="/cases">제작 케이스</NavLink>
             <NavLink
@@ -195,7 +195,7 @@ export default function Navbar() {
                 if (pathname === "/") {
                   const el = document.getElementById("equipment");
                   if (el) {
-                    const offset = window.innerWidth >= 768 ? 80 : 32;
+                    const offset = window.innerWidth >= 810 ? 80 : 32;
                     window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset, behavior: "smooth" });
                   }
                 } else {
@@ -205,14 +205,14 @@ export default function Navbar() {
               }}
             >기공장비</NavLink>
           </nav>
-          <div className="hidden md:block w-[215px]">
+          <div className="hidden tablet:block w-[215px]">
             <a href="/contact?inquiry=비즈니스 제휴 문의">
               <SecondaryButton className="w-full h-12">비즈니스 제휴 문의</SecondaryButton>
             </a>
           </div>
           <button
             onClick={openMenu}
-            className="md:hidden w-6 h-6 flex flex-col justify-between py-[3px] relative z-[60] cursor-pointer"
+            className="tablet:hidden w-6 h-6 flex flex-col justify-between py-[3px] relative z-[60] cursor-pointer"
             aria-label="메뉴 열기"
           >
             <span ref={bar1} className="block w-full h-[1.5px] bg-white rounded-full" />
