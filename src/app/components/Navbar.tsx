@@ -136,7 +136,7 @@ export default function Navbar() {
       <div
         ref={menuRef}
         style={{ clipPath: "inset(0% 0% 100% 0%)", pointerEvents: "none" }}
-        className="fixed inset-0 z-50 bg-[#0B0B0C] flex flex-col px-5 pt-6 pb-10"
+        className="fixed inset-0 z-[100] bg-[#0B0B0C] flex flex-col px-5 pt-6 pb-10"
       >
         <div className="menu-item flex items-center justify-between mb-12">
           <a href="/" className="font-display text-2xl text-[#ecc744] tracking-[-0.03em] leading-none">
