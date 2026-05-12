@@ -91,7 +91,7 @@ function ServiceCard({ service }: { service: (typeof SERVICES)[number] }) {
       </div>
 
       {/* Text */}
-      <div className="flex flex-col gap-2 md:flex-1 md:px-6">
+      <div className="flex flex-col gap-2 md:flex-1 md:px-4">
         <p
           ref={titleRef}
           className="font-display text-base md:text-2xl text-[#1c1c19] tracking-[-0.03em] leading-[1.2]"
