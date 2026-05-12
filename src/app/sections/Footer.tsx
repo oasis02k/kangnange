@@ -10,7 +10,7 @@ function useScrollNav() {
     if (pathname === "/") {
       const el = document.getElementById(sectionId);
       if (el) {
-        const offset = window.innerWidth >= 768 ? 80 : 32;
+        const offset = window.innerWidth >= 810 ? 80 : 32;
         window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset, behavior: "smooth" });
       }
     } else {
@@ -25,20 +25,20 @@ export default function Footer() {
 
   return (
     <footer className="bg-[#1c1c19]">
-      <div className="max-w-[1440px] mx-auto px-5 md:px-8 pt-8 md:pt-24 pb-8 md:pb-12">
+      <div className="max-w-[1440px] mx-auto px-5 tablet:px-8 pt-8 tablet:pt-24 pb-8 tablet:pb-12">
 
         {/* Logo */}
-        <div className="flex items-center gap-2 text-[#ecc744] tracking-[-0.03em] mb-6 md:mb-8">
-          <span className="font-display text-2xl md:text-[48px] leading-none">
+        <div className="flex items-center gap-2 text-[#ecc744] tracking-[-0.03em] mb-6 tablet:mb-8">
+          <span className="font-display text-2xl tablet:text-[48px] leading-none">
             강냉이.com
           </span>
-          <span className="font-sans font-medium text-2xl md:text-[48px] leading-[1.2]">
+          <span className="font-sans font-medium text-2xl tablet:text-[48px] leading-[1.2]">
             Dental Lab
           </span>
         </div>
 
         {/* Divider + columns */}
-        <div className="border-t border-[rgba(236,199,68,0.56)] pt-6 flex flex-col md:flex-row md:justify-between gap-8 md:gap-12">
+        <div className="border-t border-[rgba(236,199,68,0.56)] pt-6 flex flex-col tablet:flex-row tablet:justify-between gap-8 tablet:gap-12">
 
           {/* Links */}
           <div className="flex flex-col gap-4">
@@ -71,7 +71,7 @@ export default function Footer() {
             <div className="flex flex-col gap-2 font-sans font-normal text-base text-[rgba(236,199,68,0.72)] tracking-[-0.03em] leading-[1.4]">
               <p>
                 서울특별시 은평구 진흥로 51, 302호{" "}
-                <br className="md:hidden" />
+                <br className="tablet:hidden" />
                 (역촌동, 은혜빌딩)
               </p>
               <p>전화: 02)358 2804</p>
@@ -86,7 +86,7 @@ export default function Footer() {
         <img
           src="/footer/wordmark.svg"
           alt="강냉이.com"
-          className="w-full mt-8 md:mt-12"
+          className="w-full mt-8 tablet:mt-12"
         />
 
       </div>

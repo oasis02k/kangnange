@@ -11,6 +11,17 @@ const DESKTOP_LINES = [
   "치과와의 소통을 가장 중요하게 생각하며, 더 좋은 결과를 위해 매 케이스 최선을 다합니다.",
 ];
 
+const TABLET_LINES = [
+  "강냉이.com은 CAD/CAM 기반으로",
+  "작업하는 디지털 기공소입니다.",
+  "10년 동안 구강스캔을 활용한 모델리스 보철을",
+  "10,000건 이상 제작해왔고,",
+  "풀케이스부터 인레이, 심미 보철까지",
+  "좋은 적합도를 만드는 노하우를 갖추고 있습니다.",
+  "치과와의 소통을 가장 중요하게 생각하며,",
+  "더 좋은 결과를 위해 매 케이스 최선을 다합니다.",
+];
+
 const MOBILE_LINES = [
   "강냉이.com은 CAD/CAM 기반으로",
   "작업하는 디지털 기공소입니다.",
@@ -56,8 +67,8 @@ export default function SectionWhy() {
 
     const mm = gsap.matchMedia();
 
-    mm.add("(min-width: 768px)", () => {
-      const words = sectionRef.current!.querySelectorAll("[data-desktop-word]");
+    mm.add("(min-width: 810px)", () => {
+      const words = sectionRef.current!.querySelectorAll("[data-tablet-word]");
       gsap.fromTo(
         words,
         { color: "rgba(255,255,255,0.15)" },
@@ -78,7 +89,7 @@ export default function SectionWhy() {
       );
     });
 
-    mm.add("(max-width: 767px)", () => {
+    mm.add("(max-width: 809px)", () => {
       const words = sectionRef.current!.querySelectorAll("[data-mobile-word]");
       gsap.fromTo(
         words,
@@ -109,20 +120,20 @@ export default function SectionWhy() {
   return (
     <section
       ref={sectionRef}
-      className="bg-[#1c1c19] flex flex-col items-center justify-center min-h-screen px-5 md:px-8"
+      className="bg-[#1c1c19] flex flex-col items-center justify-center min-h-screen px-5 tablet:px-8"
     >
       <div className="flex flex-col gap-12 text-center w-full max-w-[1440px] mx-auto">
-        <h2 className="font-display text-[32px] md:text-[56px] text-[#ecc744] tracking-[-0.03em] leading-[1.2] w-full">
+        <h2 className="font-display text-[32px] tablet:text-[56px] text-[#ecc744] tracking-[-0.03em] leading-[1.2] w-full">
           Why 강냉이.com
         </h2>
 
-        {/* Desktop */}
-        <p className="hidden md:block font-sans font-medium text-[32px] leading-[1.6] tracking-[-0.03em] w-full">
-          {buildWordSpans(DESKTOP_LINES, "data-desktop-word")}
+        {/* Tablet + Desktop */}
+        <p className="hidden tablet:block font-sans font-medium text-[32px] leading-[1.6] tracking-[-0.03em] w-full">
+          {buildWordSpans(TABLET_LINES, "data-tablet-word")}
         </p>
 
         {/* Mobile */}
-        <p className="md:hidden font-sans font-medium text-[20px] leading-[1.6] tracking-[-0.03em] w-full">
+        <p className="tablet:hidden font-sans font-medium text-[20px] leading-[1.6] tracking-[-0.03em] w-full">
           {buildWordSpans(MOBILE_LINES, "data-mobile-word")}
         </p>
       </div>

@@ -109,28 +109,30 @@ export default function ContactPage() {
       <Navbar />
 
       <main className="bg-[#f5f5f5] min-h-screen">
-        <div className="w-full max-w-[1440px] mx-auto px-5 md:px-8 pt-[120px] md:pt-[176px] pb-16 md:pb-24">
+        <div className="w-full max-w-[1440px] mx-auto px-5 tablet:px-8 pt-[120px] tablet:pt-[176px] pb-16 tablet:pb-24">
 
-          <h1 className="font-display text-[32px] md:text-[56px] text-[#1c1c19] tracking-[-0.03em] leading-[1.2] text-center w-full mb-10 md:mb-12">
+          <h1 className="font-display text-[32px] tablet:text-[56px] text-[#1c1c19] tracking-[-0.03em] leading-[1.2] text-center w-full mb-10 tablet:mb-12">
             의뢰 / 상담
           </h1>
 
           {/* Form card */}
-          <div className="bg-white rounded-3xl overflow-hidden w-full md:max-w-[1000px] mx-auto flex flex-col md:flex-row">
+          <div className="bg-white rounded-3xl overflow-hidden w-full tablet:max-w-[1000px] mx-auto flex flex-col tablet:flex-row">
 
               {/* Left: image + greeting */}
-              <div className="relative flex flex-col justify-end md:w-[500px] shrink-0 h-[140px] md:h-auto">
+              <div className="relative flex flex-col justify-end tablet:flex-1 h-[140px] tablet:h-auto">
                 <img
                   src="/contact/hero.jpg"
                   alt=""
                   className="absolute inset-0 w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-black/45" />
-                <div className="relative flex flex-col gap-4 px-6 pt-6 pb-8 md:pb-12">
-                  <p className="font-sans font-medium text-[18px] md:text-[32px] text-white tracking-[-0.03em] leading-[1.2]">
-                    안녕하세요 강냉이.com 입니다.
+                <div className="relative flex flex-col gap-4 px-6 pt-6 pb-8 tablet:pb-12">
+                  <p className="font-sans font-medium text-[18px] tablet:text-[32px] text-white tracking-[-0.03em] leading-[1.2]">
+                    안녕하세요{" "}
+                    <br className="hidden tablet:block" />
+                    강냉이.com 입니다.
                   </p>
-                  <p className="font-sans font-normal text-base md:text-[18px] text-white tracking-[-0.03em] leading-[1.4]">
+                  <p className="font-sans font-normal text-base tablet:text-[18px] text-white/75 tracking-[-0.03em] leading-[1.4]">
                     궁금한 점이 있으면 언제든 메시지 주세요,
                     <br />
                     확인 후 빠르게 답변드릴게요.
@@ -141,7 +143,7 @@ export default function ContactPage() {
               {/* Right: form */}
               <form
                 onSubmit={handleSubmit}
-                className="flex flex-col gap-6 p-4 md:p-8 flex-1"
+                className="flex flex-col gap-6 p-4 tablet:px-6 tablet:py-8 flex-1"
               >
                 {/* honeypot */}
                 <input type="text" name="_honey" style={{ display: "none" }} tabIndex={-1} autoComplete="off" aria-hidden="true" />

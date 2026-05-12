@@ -12,4 +12,5 @@ html {
 @theme inline {
   --font-display: var(--font-a2z);
   --font-sans: var(--font-noto-sans-kr);
+  --breakpoint-tablet: 810px;
 }

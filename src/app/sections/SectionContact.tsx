@@ -97,35 +97,37 @@ export default function SectionContact() {
   }
 
   return (
-    <section className="bg-[#f5f5f5] py-8 md:py-24 px-5 md:px-8">
-      <div className="flex flex-col gap-6 md:gap-12 items-center w-full max-w-[1440px] mx-auto">
+    <section className="bg-[#f5f5f5] py-8 tablet:py-24 px-5 tablet:px-8">
+      <div className="flex flex-col gap-6 tablet:gap-12 items-center w-full max-w-[1440px] mx-auto">
 
         {/* Heading */}
-        <div className="flex flex-col gap-2 md:gap-4 text-center w-full">
-          <h2 className="font-display text-[32px] md:text-[56px] text-[#1c1c19] tracking-[-0.03em] leading-[1.2]">
+        <div className="flex flex-col gap-2 tablet:gap-4 text-center w-full">
+          <h2 className="font-display text-[32px] tablet:text-[56px] text-[#1c1c19] tracking-[-0.03em] leading-[1.2]">
             Contact
           </h2>
-          <p className="font-sans font-normal text-base md:text-2xl text-[#1c1c19] tracking-[-0.03em] leading-[1.4]">
+          <p className="font-sans font-normal text-base tablet:text-2xl text-[#1c1c19] tracking-[-0.03em] leading-[1.4]">
             의뢰/상담
           </p>
         </div>
 
         {/* Card */}
-        <div className="bg-white rounded-3xl overflow-hidden w-full md:max-w-[1000px] flex flex-col md:flex-row">
+        <div className="bg-white rounded-3xl overflow-hidden w-full tablet:max-w-[1000px] flex flex-col tablet:flex-row">
 
           {/* Left: image + greeting */}
-          <div className="relative flex flex-col justify-end md:w-[500px] shrink-0 h-[140px] md:h-auto">
+          <div className="relative flex flex-col justify-end tablet:flex-1 h-[140px] tablet:h-auto">
             <img
               src="/contact/hero.jpg"
               alt=""
               className="absolute inset-0 w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-black/45" />
-            <div className="relative flex flex-col gap-4 px-6 pt-6 pb-8 md:pb-12">
-              <p className="font-sans font-medium text-[18px] md:text-[32px] text-white tracking-[-0.03em] leading-[1.2]">
-                안녕하세요 강냉이.com 입니다.
+            <div className="relative flex flex-col gap-4 px-6 pt-6 pb-8 tablet:pb-12">
+              <p className="font-sans font-medium text-[18px] tablet:text-[32px] text-white tracking-[-0.03em] leading-[1.2]">
+                안녕하세요{" "}
+                <br className="hidden tablet:block" />
+                강냉이.com 입니다.
               </p>
-              <p className="font-sans font-normal text-base md:text-[18px] text-white tracking-[-0.03em] leading-[1.4]">
+              <p className="font-sans font-normal text-base tablet:text-[18px] text-white/75 tracking-[-0.03em] leading-[1.4]">
                 궁금한 점이 있으면 언제든 메시지 주세요,
                 <br />
                 확인 후 빠르게 답변드릴게요.
@@ -136,7 +138,7 @@ export default function SectionContact() {
           {/* Right: form */}
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col gap-6 p-4 md:p-8 flex-1"
+            className="flex flex-col gap-6 p-4 tablet:px-6 tablet:py-8 flex-1"
           >
             {/* honeypot — keeps bots out */}
             <input type="text" name="_honey" style={{ display: "none" }} tabIndex={-1} autoComplete="off" aria-hidden="true" />

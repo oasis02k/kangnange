@@ -55,7 +55,6 @@ function CaseCard({
     gsap.set(dividerRef.current,  { left: `${pct}%` });
   };
 
-  /* ── mouse ─────────────────────────────────── */
   const onMouseDown = (e: React.MouseEvent) => {
     e.preventDefault();
     isDragging.current = true;
@@ -71,7 +70,6 @@ function CaseCard({
     document.addEventListener("mouseup",   onUp);
   };
 
-  /* ── touch (stopPropagation keeps card-swipe from firing on image) ── */
   const onTouchStart = (e: React.TouchEvent) => {
     e.stopPropagation();
     isDragging.current = true;
@@ -95,12 +93,9 @@ function CaseCard({
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
-        className="relative h-40 md:h-auto md:aspect-[770/410] overflow-hidden shrink-0 select-none cursor-ew-resize"
+        className="relative h-40 tablet:h-auto tablet:aspect-[770/410] overflow-hidden shrink-0 select-none cursor-ew-resize"
       >
-        {/* Before (base) */}
         <img src={before} alt="Before" className="absolute inset-0 w-full h-full object-cover pointer-events-none" />
-
-        {/* After (clipped) */}
         <img
           ref={afterImgRef}
           src={after}
@@ -108,25 +103,18 @@ function CaseCard({
           className="absolute inset-0 w-full h-full object-cover pointer-events-none"
           style={{ clipPath: "inset(0 50% 0 0)" }}
         />
-
-        {/* Before / After labels */}
         <span className="absolute bottom-3 left-3 font-sans font-medium text-xs text-white bg-black/40 px-2 py-1 rounded-full pointer-events-none">
           Before
         </span>
         <span className="absolute bottom-3 right-3 font-sans font-medium text-xs text-white bg-black/40 px-2 py-1 rounded-full pointer-events-none">
           After
         </span>
-
-        {/* Divider */}
         <div
           ref={dividerRef}
           className="absolute inset-y-0 pointer-events-none"
           style={{ left: "50%", transform: "translateX(-50%)" }}
         >
-          {/* Vertical line */}
           <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-[2px] bg-white/80" />
-
-          {/* Handle — original pill UI */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#1c1c19] flex items-center gap-2 p-1.5 rounded-full shadow-md">
             <span className="bg-[#ecc744] w-6 h-6 rounded-full flex items-center justify-center shrink-0">
               <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="#1c1c19" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -139,11 +127,11 @@ function CaseCard({
       </div>
 
       {/* Text */}
-      <div className="bg-[#f5f5f5] flex flex-col gap-4 p-4 md:p-6 flex-1">
-        <h3 className="font-sans font-bold text-base md:text-[20px] text-[#1c1c19] tracking-[-0.03em] leading-[1.2]">
+      <div className="bg-[#f5f5f5] flex flex-col gap-4 p-4 tablet:p-6 flex-1">
+        <h3 className="font-sans font-bold text-base tablet:text-2xl text-[#1c1c19] tracking-[-0.03em] leading-[1.2]">
           {title}
         </h3>
-        <p className="font-sans font-normal text-base md:text-[18px] text-[rgba(28,28,25,0.56)] tracking-[-0.03em] leading-[1.4]">
+        <p className="font-sans font-normal text-base tablet:text-[18px] text-[rgba(28,28,25,0.56)] tracking-[-0.03em] leading-[1.4]">
           {description}
         </p>
       </div>
@@ -165,7 +153,7 @@ function CasesLink() {
     <a
       href="/cases"
       onMouseEnter={handleMouseEnter}
-      className="bg-[#ecc744] hover:bg-[#E3BA27] transition-colors h-12 px-6 rounded-xl flex items-center justify-center gap-1.5 font-sans font-medium text-base text-[#1c1c19] tracking-[-0.02em] w-full md:w-auto cursor-pointer"
+      className="bg-[#ecc744] hover:bg-[#E3BA27] transition-colors h-12 px-6 rounded-xl flex items-center justify-center gap-1.5 font-sans font-medium text-base text-[#1c1c19] tracking-[-0.02em] w-full tablet:w-auto cursor-pointer"
     >
       제작 케이스 보러가기
       <span className="relative overflow-hidden inline-flex" style={{ width: "0.9em", height: "1.1em" }}>
@@ -175,18 +163,20 @@ function CasesLink() {
   );
 }
 
-const SLIDE_GAP = 16;
-
 export default function SectionCases() {
   const [active, setActive]  = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const trackRef     = useRef<HTMLDivElement>(null);
+  const cardRef      = useRef<HTMLDivElement>(null);
   const touchStartX  = useRef(0);
   const isPaused     = useRef(false);
   const intervalRef  = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const slideWidth = () =>
-    containerRef.current ? containerRef.current.offsetWidth + SLIDE_GAP : 0;
+  const slideWidth = () => {
+    if (!cardRef.current) return 0;
+    const gap = window.innerWidth >= 810 ? 24 : 16;
+    return cardRef.current.offsetWidth + gap;
+  };
 
   const snapTo = (index: number) => {
     gsap.to(trackRef.current, { x: -index * slideWidth(), duration: 0.45, ease: "power3.inOut" });
@@ -229,26 +219,26 @@ export default function SectionCases() {
   };
 
   return (
-    <section id="cases" className="bg-white py-8 md:py-24 px-5 md:px-8">
-      <div className="flex flex-col gap-6 md:gap-12 items-center w-full max-w-[1440px] mx-auto">
+    <section id="cases" className="bg-white py-8 tablet:py-24 px-5 tablet:px-8">
+      <div className="flex flex-col gap-6 tablet:gap-12 items-center w-full max-w-[1440px] mx-auto">
 
         {/* Heading */}
-        <div className="flex flex-col gap-2 md:gap-4 text-center w-full">
-          <h2 className="font-display text-[32px] md:text-[56px] text-[#1c1c19] tracking-[-0.03em] leading-[1.2]">
+        <div className="flex flex-col gap-2 tablet:gap-4 text-center w-full">
+          <h2 className="font-display text-[32px] tablet:text-[56px] text-[#1c1c19] tracking-[-0.03em] leading-[1.2]">
             치료 사례
           </h2>
-          <p className="font-sans font-normal text-base md:text-2xl text-[rgba(28,28,25,0.56)] tracking-[-0.03em] leading-[1.4]">
+          <p className="font-sans font-normal text-base tablet:text-2xl text-[rgba(28,28,25,0.56)] tracking-[-0.03em] leading-[1.4]">
             다양한 임상 치료 사례를 확인해 보세요
           </p>
         </div>
 
         {/* Desktop: row */}
-        <div className="hidden md:flex gap-6 w-full">
+        <div className="hidden lg:flex items-stretch gap-6 w-full">
           {CASES.map((c) => <CaseCard key={c.title} {...c} />)}
         </div>
 
-        {/* Mobile: swipeable slider */}
-        <div className="md:hidden w-full flex flex-col gap-4">
+        {/* Mobile + Tablet: swipeable slider */}
+        <div className="lg:hidden w-full flex flex-col gap-4">
           <div
             ref={containerRef}
             className="w-full overflow-hidden"
@@ -256,9 +246,13 @@ export default function SectionCases() {
             onTouchMove={onTouchMove}
             onTouchEnd={onTouchEnd}
           >
-            <div ref={trackRef} className="flex items-stretch gap-4">
-              {CASES.map((c) => (
-                <div key={c.title} className="min-w-full">
+            <div ref={trackRef} className="flex items-stretch gap-4 tablet:gap-6">
+              {CASES.map((c, i) => (
+                <div
+                  key={c.title}
+                  ref={i === 0 ? cardRef : undefined}
+                  className="min-w-full tablet:min-w-[60%] flex flex-col"
+                >
                   <CaseCard {...c} />
                 </div>
               ))}

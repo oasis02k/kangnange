@@ -8,24 +8,28 @@ const STEPS = [
     step: 1,
     title: "케이스 접수",
     description: "스캔(STL) / 처방 / 쉐이드 / 참고 사진을 전달",
+    tabletDescription: "스캔(STL) / 처방 / 쉐이드 / 참고\n사진을 전달합니다.",
     image: "/workflow/step1.jpg",
   },
   {
     step: 2,
     title: "검토 & 일정 안내",
     description: "난이도/재료/납기 확인 후 제작 일정 공유",
+    tabletDescription: "난이도/재료/납기 확인 후\n제작 일정 공유",
     image: "/workflow/step2.jpg",
   },
   {
     step: 3,
     title: "디자인 & 제작",
     description: "CAD 디자인 → 제작/가공 → 마감",
+    tabletDescription: "CAD 디자인 →\n제작/가공 → 마감",
     image: "/workflow/step3.jpg",
   },
   {
     step: 4,
     title: "검수 & 출고",
     description: "최종 체크 후 배송/전달",
+    tabletDescription: "최종 체크 후\n배송/전달",
     image: "/workflow/step4.jpg",
   },
 ];
@@ -41,12 +45,12 @@ function FlowPill() {
   }, []);
 
   return (
-    <div className="bg-[#f0f0f0] flex items-center justify-center gap-6 md:gap-12 px-6 md:px-12 py-4 md:py-6 rounded-full w-full md:w-auto">
-      <span className="font-sans font-medium text-[20px] md:text-[32px] text-[#1c1c19] tracking-[-0.03em] leading-[1.2]">의뢰</span>
+    <div className="bg-[#f0f0f0] tablet:bg-[#ecc744] flex items-center justify-center gap-6 tablet:gap-12 px-6 tablet:px-12 py-4 tablet:py-6 rounded-full w-full tablet:w-auto">
+      <span className="font-sans font-medium text-[20px] tablet:text-[32px] text-[#1c1c19] tracking-[-0.03em] leading-[1.2]">의뢰</span>
       <span ref={a1} className="font-sans font-bold text-2xl text-[#1c1c19] leading-[1.2]">→</span>
-      <span className="font-sans font-medium text-[20px] md:text-[32px] text-[#1c1c19] tracking-[-0.03em] leading-[1.2]">제작</span>
+      <span className="font-sans font-medium text-[20px] tablet:text-[32px] text-[#1c1c19] tracking-[-0.03em] leading-[1.2]">제작</span>
       <span ref={a2} className="font-sans font-bold text-2xl text-[#1c1c19] leading-[1.2]">→</span>
-      <span className="font-sans font-medium text-[20px] md:text-[32px] text-[#1c1c19] tracking-[-0.03em] leading-[1.2]">배송</span>
+      <span className="font-sans font-medium text-[20px] tablet:text-[32px] text-[#1c1c19] tracking-[-0.03em] leading-[1.2]">배송</span>
     </div>
   );
 }
@@ -152,15 +156,15 @@ export default function SectionWorkflow() {
   };
 
   return (
-    <section id="workflow" className="bg-white py-8 md:py-24 px-5 md:px-8">
-      <div className="flex flex-col gap-6 md:gap-12 items-center w-full max-w-[1440px] mx-auto">
+    <section id="workflow" className="bg-white py-8 tablet:py-24 px-5 tablet:px-8">
+      <div className="flex flex-col gap-6 tablet:gap-12 items-center w-full max-w-[1440px] mx-auto">
 
         {/* Heading */}
-        <div className="flex flex-col gap-2 md:gap-4 text-center w-full">
-          <h2 className="font-display text-[32px] md:text-[56px] text-[#1c1c19] tracking-[-0.03em] leading-[1.2]">
+        <div className="flex flex-col gap-2 tablet:gap-4 text-center w-full">
+          <h2 className="font-display text-[32px] tablet:text-[56px] text-[#1c1c19] tracking-[-0.03em] leading-[1.2]">
             워크플로우
           </h2>
-          <p className="font-sans font-normal text-base md:text-2xl text-[rgba(28,28,25,0.56)] tracking-[-0.03em] leading-[1.4]">
+          <p className="font-sans font-normal text-base tablet:text-2xl text-[rgba(28,28,25,0.56)] tracking-[-0.03em] leading-[1.4]">
             어떻게 의뢰하나요?
           </p>
         </div>
@@ -168,9 +172,9 @@ export default function SectionWorkflow() {
         {/* Flow pill */}
         <FlowPill />
 
-        {/* ── Desktop: 4 cards ── */}
+        {/* ── Desktop: 4 columns ── */}
         <div
-          className="hidden md:flex items-start w-full h-[376px]"
+          className="hidden lg:flex items-start w-full h-[376px]"
           onMouseLeave={() => { setActive(-1); isPaused.current = false; startAutoPlay(); }}
         >
           {STEPS.map((step, i) => {
@@ -181,7 +185,6 @@ export default function SectionWorkflow() {
                 onMouseEnter={() => { isPaused.current = true; setActive(i); }}
                 className="flex flex-col gap-6 flex-1 h-full cursor-pointer"
               >
-                {/* Badge */}
                 <span
                   className={`self-start inline-flex items-center justify-center px-4 py-2 rounded-lg font-sans font-medium text-base text-[#1c1c19] tracking-[-0.03em] leading-[1.4] whitespace-nowrap transition-colors duration-300 ${
                     isActive
@@ -192,7 +195,6 @@ export default function SectionWorkflow() {
                   Step {step.step}
                 </span>
 
-                {/* Card body */}
                 <div className="flex flex-col gap-4 py-4 flex-1 min-h-0 border-l border-[rgba(28,28,25,0.12)]">
                   <div className="flex flex-col gap-4 px-4">
                     <h3 className="font-sans font-bold text-2xl text-[#1c1c19] tracking-[-0.03em] leading-[1.2]">
@@ -202,7 +204,6 @@ export default function SectionWorkflow() {
                       {step.description}
                     </p>
                   </div>
-                  {/* Image — fixed height so all cards align; padding/radius animate with GSAP */}
                   <div
                     ref={el => { imgWrapperRefs.current[i] = el; }}
                     className="h-[199px] shrink-0"
@@ -224,8 +225,65 @@ export default function SectionWorkflow() {
           })}
         </div>
 
+        {/* ── Tablet: 2×2 grid ── */}
+        <div
+          className="hidden tablet:grid lg:hidden grid-cols-2 w-full"
+          onMouseLeave={() => { setActive(-1); isPaused.current = false; startAutoPlay(); }}
+        >
+          {STEPS.map((step, i) => {
+            const isActive = active === i;
+            return (
+              <div
+                key={step.step}
+                onMouseEnter={() => { isPaused.current = true; setActive(i); }}
+                className={`flex flex-col gap-6 cursor-pointer ${isActive ? "h-[376px]" : "self-start"}`}
+              >
+                <span
+                  className={`self-start inline-flex items-center justify-center px-4 py-2 rounded-lg font-sans font-medium text-base text-[#1c1c19] tracking-[-0.03em] leading-[1.4] whitespace-nowrap transition-colors duration-300 ${
+                    isActive
+                      ? "bg-[#ecc744]"
+                      : "bg-white border border-[rgba(28,28,25,0.12)]"
+                  }`}
+                >
+                  Step {step.step}
+                </span>
+
+                <div className={`flex flex-col gap-4 py-4 border-l border-[rgba(28,28,25,0.12)] ${isActive ? "flex-1 min-h-0" : ""}`}>
+                  <div className="flex flex-col gap-4 px-4">
+                    <h3 className="font-sans font-bold text-2xl text-[#1c1c19] tracking-[-0.03em] leading-[1.2]">
+                      {step.title}
+                    </h3>
+                    <p className="font-sans font-medium text-[18px] text-[rgba(28,28,25,0.56)] tracking-[-0.03em] leading-[1.4] whitespace-pre-line">
+                      {step.tabletDescription}
+                    </p>
+                  </div>
+                  {isActive ? (
+                    <div className="flex-1 min-h-0 relative overflow-hidden">
+                      <img
+                        src={step.image}
+                        alt={step.title}
+                        className="absolute inset-0 w-full h-full object-cover"
+                      />
+                    </div>
+                  ) : (
+                    <div className="h-[199px] p-4 flex flex-col">
+                      <div className="relative flex-1 overflow-hidden rounded-2xl">
+                        <img
+                          src={step.image}
+                          alt={step.title}
+                          className="absolute inset-0 w-full h-full object-cover"
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
         {/* ── Mobile: swipeable slider ── */}
-        <div className="md:hidden w-full flex flex-col gap-4">
+        <div className="tablet:hidden w-full flex flex-col gap-4">
           <div
             ref={containerRef}
             className="w-full overflow-hidden"
@@ -236,7 +294,6 @@ export default function SectionWorkflow() {
             <div ref={trackRef} className="flex">
               {STEPS.map((step, i) => (
                 <div key={step.step} className="min-w-full flex flex-col gap-4">
-                  {/* Badge — always active style on mobile */}
                   <span className="self-start inline-flex items-center justify-center px-4 py-2 rounded-lg font-sans font-medium text-base text-[#1c1c19] tracking-[-0.03em] leading-[1.4] whitespace-nowrap bg-[#ecc744]">
                     Step {step.step}
                   </span>
@@ -250,7 +307,6 @@ export default function SectionWorkflow() {
                         {step.description}
                       </p>
                     </div>
-                    {/* Full-bleed image — no padding, no rounding */}
                     <div className="h-[199px] relative overflow-hidden">
                       <img
                         src={step.image}
@@ -279,7 +335,7 @@ export default function SectionWorkflow() {
         </div>
 
         {/* Footer note */}
-        <div className="bg-[#f5f5f5] px-4 py-1.5 rounded-full w-full md:w-auto">
+        <div className="bg-[#f5f5f5] px-4 py-1.5 rounded-full w-full tablet:w-auto">
           <p className="font-sans font-normal text-base text-[rgba(28,28,25,0.56)] tracking-[-0.03em] leading-[1.2] text-center whitespace-nowrap">
             *처음 거래라면 테스트 케이스/샘플링 가능
           </p>
