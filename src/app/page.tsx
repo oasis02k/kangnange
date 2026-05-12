@@ -54,7 +54,7 @@ export default function Home() {
         {/* Hero content */}
         <div className="relative z-10 flex flex-col gap-4 px-5 md:px-8 pb-8 md:pb-24">
           <h1 className="font-display text-[28px] md:text-[56px] text-[#f5f5f5] tracking-[-0.03em] leading-[1.2] whitespace-pre-wrap">
-            <span className="md:hidden">{"스캔 데이터 기반,\n적합도와 품질로\n신뢰받는 기공소"}</span>
+            <span className="md:hidden">{"스캔 데이터 기반, 적합도와\n품질로 신뢰받는 기공소"}</span>
             <span className="hidden md:inline">{"스캔 데이터 기반,\n적합도와 품질로 신뢰받는 기공소"}</span>
           </h1>
           <p className="font-sans font-normal text-base md:text-[18px] text-white tracking-[-0.03em] leading-[1.4]">
