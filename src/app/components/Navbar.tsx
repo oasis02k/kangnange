@@ -99,14 +99,17 @@ export function CTAButton({
 
 export default function Navbar() {
   const pathname = usePathname();
-  const bar1    = useRef<HTMLSpanElement>(null);
-  const bar2    = useRef<HTMLSpanElement>(null);
-  const bar3    = useRef<HTMLSpanElement>(null);
-  const menuRef = useRef<HTMLDivElement>(null);
-  const isOpen  = useRef(false);
+  const bar1      = useRef<HTMLSpanElement>(null);
+  const bar2      = useRef<HTMLSpanElement>(null);
+  const bar3      = useRef<HTMLSpanElement>(null);
+  const menuRef   = useRef<HTMLDivElement>(null);
+  const burgerRef = useRef<HTMLButtonElement>(null);
+  const isOpen    = useRef(false);
 
   const openMenu = () => {
-    if (isOpen.current || window.innerWidth >= 768) return;
+    if (isOpen.current) return;
+    // Only open if the hamburger button is actually visible in the DOM
+    if (!burgerRef.current || burgerRef.current.offsetParent === null) return;
     isOpen.current = true;
     gsap.to(bar1.current, { y: 8,  rotate: 45,  duration: 0.35, ease: "power2.inOut" });
     gsap.to(bar2.current, { opacity: 0, scaleX: 0, duration: 0.2 });
@@ -211,8 +214,9 @@ export default function Navbar() {
             </a>
           </div>
           <button
+            ref={burgerRef}
             onClick={openMenu}
-            className="md:hidden w-6 h-6 flex flex-col justify-between py-[3px] relative z-[60] cursor-pointer touch-action-manipulation"
+            className="md:hidden w-6 h-6 flex flex-col justify-between py-[3px] relative z-[60] cursor-pointer"
             style={{ touchAction: "manipulation" }}
             aria-label="메뉴 열기"
           >
