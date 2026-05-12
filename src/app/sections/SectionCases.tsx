@@ -95,12 +95,12 @@ function CaseCard({
         onTouchEnd={onTouchEnd}
         className="relative h-40 tablet:h-auto tablet:aspect-[770/410] tablet:min-h-[240px] overflow-hidden shrink-0 select-none cursor-ew-resize"
       >
-        <img src={before} alt="Before" className="absolute inset-0 w-full h-full object-cover pointer-events-none" />
+        <img src={before} alt="Before" className="absolute inset-0 w-full h-full object-fill pointer-events-none" />
         <img
           ref={afterImgRef}
           src={after}
           alt="After"
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+          className="absolute inset-0 w-full h-full object-fill pointer-events-none"
           style={{ clipPath: "inset(0 50% 0 0)" }}
         />
         <span className="absolute bottom-3 left-3 font-sans font-medium text-xs text-white bg-black/40 px-2 py-1 rounded-full pointer-events-none">
