@@ -73,7 +73,7 @@ export default function SectionWorkflow() {
   const cardRef      = useRef<HTMLDivElement>(null);
   const touchStartX  = useRef(0);
 
-  const slideWidth = () => cardRef.current ? cardRef.current.offsetWidth : 0;
+  const slideWidth = () => cardRef.current ? cardRef.current.offsetWidth + 16 : 0;
 
   /* ── auto-rotate ─────────────────────────────── */
   const startAutoPlay = useCallback(() => {
@@ -291,7 +291,7 @@ export default function SectionWorkflow() {
             onTouchMove={onTouchMove}
             onTouchEnd={onTouchEnd}
           >
-            <div ref={trackRef} className="flex">
+            <div ref={trackRef} className="flex gap-4">
               {STEPS.map((step, i) => (
                 <div key={step.step} ref={i === 0 ? cardRef : undefined} className="grow-0 shrink-0 basis-full max-w-[380px] flex flex-col gap-4">
                   <span className="self-start inline-flex items-center justify-center px-4 py-2 rounded-lg font-sans font-medium text-base text-[#1c1c19] tracking-[-0.03em] leading-[1.4] whitespace-nowrap bg-[#ecc744]">
