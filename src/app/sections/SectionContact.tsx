@@ -227,9 +227,12 @@ export default function SectionContact() {
           <p className="font-sans font-medium text-base text-[rgba(28,28,25,0.32)] tracking-[-0.03em] leading-[1.4]">
             케이스 정보(보철 종류/환자 상태 요약/희망 납기/쉐이드/참고사진)가 있으면 더 빠르게 답변드릴 수 있어요.
           </p>
-          <a href="mailto:kangdoc80@naver.com" className="font-sans font-medium text-base text-[rgba(28,28,25,0.32)] tracking-[-0.03em] leading-[1.4] hover:text-[#1c1c19] transition-colors">
-            kangdoc80@naver.com
-          </a>
+          <p className="font-sans font-medium text-base text-[rgba(28,28,25,0.32)] tracking-[-0.03em] leading-[1.4]">
+            보내실 곳{" "}
+            <a href="mailto:kangdoc80@naver.com" className="hover:text-[#1c1c19] transition-colors">
+              kangdoc80@naver.com
+            </a>
+          </p>
         </div>
 
       </div>
