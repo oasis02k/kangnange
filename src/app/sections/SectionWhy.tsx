@@ -68,6 +68,13 @@ export default function SectionWhy() {
     };
     ScrollTrigger.addEventListener("refreshInit", onRefreshInit);
 
+    let rafId: number;
+    const handleResize = () => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => ScrollTrigger.refresh(true));
+    };
+    window.addEventListener("resize", handleResize);
+
     const mm = gsap.matchMedia();
 
     mm.add("(min-width: 810px) and (max-width: 1023px)", () => {
@@ -138,6 +145,8 @@ export default function SectionWhy() {
 
     return () => {
       ScrollTrigger.removeEventListener("refreshInit", onRefreshInit);
+      window.removeEventListener("resize", handleResize);
+      cancelAnimationFrame(rafId);
       mm.revert();
     };
   }, []);
