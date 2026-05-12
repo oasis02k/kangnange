@@ -228,7 +228,7 @@ export default function ContactPage() {
               </form>
           </div>
 
-          <div className="flex flex-col gap-1 items-center text-center">
+          <div className="flex flex-col gap-1 items-center text-center mt-4 tablet:mt-12">
             <p className="font-sans font-medium text-base text-[#1c1c19] tracking-[-0.03em] leading-[1.4]">
               케이스 정보(보철 종류/환자 상태 요약/희망 납기/쉐이드/참고사진)가 있으면 더 빠르게 답변드릴 수 있어요.
             </p>
