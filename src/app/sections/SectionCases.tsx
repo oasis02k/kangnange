@@ -93,7 +93,7 @@ function CaseCard({
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
-        className="relative aspect-[16/9] min-h-[180px] tablet:aspect-[770/410] tablet:min-h-[240px] overflow-hidden shrink-0 select-none cursor-ew-resize"
+        className="relative aspect-[16/9] min-h-[140px] tablet:aspect-[770/410] tablet:min-h-[240px] overflow-hidden shrink-0 select-none cursor-ew-resize"
       >
         <img src={before} alt="Before" className="absolute inset-0 w-full h-full object-cover pointer-events-none" />
         <img
