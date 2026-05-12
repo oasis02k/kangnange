@@ -165,12 +165,20 @@ function CasesLink() {
 
 export default function SectionCases() {
   const [active, setActive]  = useState(0);
+  const [isTablet, setIsTablet] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const trackRef     = useRef<HTMLDivElement>(null);
   const cardRef      = useRef<HTMLDivElement>(null);
   const touchStartX  = useRef(0);
   const isPaused     = useRef(false);
   const intervalRef  = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => {
+    const check = () => setIsTablet(window.innerWidth >= 810 && window.innerWidth < 1024);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   const slideWidth = () => {
     if (!cardRef.current) return 0;
@@ -251,7 +259,8 @@ export default function SectionCases() {
                 <div
                   key={c.title}
                   ref={i === 0 ? cardRef : undefined}
-                  className="w-full shrink-0 tablet:w-[446px] flex flex-col"
+                  className="min-w-full flex flex-col"
+                  style={isTablet ? { minWidth: "446px", width: "446px", flexShrink: 0 } : undefined}
                 >
                   <CaseCard {...c} />
                 </div>
