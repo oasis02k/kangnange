@@ -19,6 +19,13 @@ const notoSansKR = Noto_Sans_KR({
 export const metadata: Metadata = {
   title: "디지털 치과기공소 · CAD/CAM 모델리스 보철 전문 | 강냉이닷컴",
   description: "구강스캔 기반 모델리스 보철 10년 경력, 10,000건 이상. 크라운·임플란트·덴쳐·심미보철·교정장치 제작. 처음 거래 시 테스트 케이스 가능. 서울 은평구.",
+  alternates: {
+    canonical: "https://www.kangnange.com/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
     title: "디지털 치과기공소 · CAD/CAM 모델리스 보철 전문 | 강냉이닷컴",
     description: "구강스캔 기반 모델리스 보철 10년 경력, 10,000건 이상. 크라운·임플란트·덴쳐·심미보철·교정장치 제작. 처음 거래 시 테스트 케이스 가능. 서울 은평구.",
