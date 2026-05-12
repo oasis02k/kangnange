@@ -54,7 +54,7 @@ export default function Home() {
         {/* Hero content */}
         <div className="relative z-10 flex flex-col gap-4 px-5 md:px-8 pb-8 md:pb-24">
           <h1 className="font-display text-[28px] md:text-[56px] text-[#f5f5f5] tracking-[-0.03em] leading-[1.2] whitespace-pre-wrap">
-            {"스캔 데이터로 정확하게.\n납기와 품질을 지키는 기공소"}
+            {"스캔 데이터 기반,\n적합도와 품질로 신뢰받는 기공소"}
           </h1>
           <p className="font-sans font-normal text-base md:text-[18px] text-white tracking-[-0.03em] leading-[1.4]">
             <span className="md:hidden whitespace-pre-line">{"구강스캐너 데이터 기반으로\n모델리스 제작을 지원합니다."}</span>
