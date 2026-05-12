@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 
 function Field({
   label,
@@ -46,10 +46,8 @@ export default function SectionContact() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const [fileName, setFileName] = useState("");
   const [inquiry, setInquiry] = useState("");
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
-  const fileRef = useRef<HTMLInputElement>(null);
 
   const isValid = clinicName.trim() !== "" && phone.trim() !== "";
 
@@ -67,17 +65,6 @@ export default function SectionContact() {
     if (email)   payload["이메일"] = email;
     if (message) payload["문의사항"] = message;
 
-    const file = fileRef.current?.files?.[0];
-    if (file && file.size <= 2 * 1024 * 1024) {
-      const base64 = await new Promise<string>((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result as string);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
-      payload["이미지"] = base64;
-    }
-
     try {
       const res = await fetch(FORMSPARK_URL, {
         method: "POST",
@@ -86,8 +73,7 @@ export default function SectionContact() {
       });
       if (res.ok) {
         setStatus("success");
-        setInquiry(""); setClinicName(""); setPhone(""); setName(""); setEmail(""); setMessage(""); setFileName("");
-        if (fileRef.current) fileRef.current.value = "";
+        setInquiry(""); setClinicName(""); setPhone(""); setName(""); setEmail(""); setMessage("");
       } else {
         setStatus("error");
       }
@@ -214,23 +200,6 @@ export default function SectionContact() {
               />
             </Field>
 
-            <Field label="업로드 이미지">
-              <div className="flex items-center gap-2 w-full h-12 border border-black/[0.12] rounded-lg px-4 transition-colors focus-within:border-[#ecc744]">
-                <span className={`flex-1 min-w-0 truncate font-sans font-normal text-base tracking-[-0.03em] ${fileName ? "text-[#1c1c19]" : "text-black/[0.32]"}`}>
-                  {fileName || "이미지를 업로드해 주세요"}
-                </span>
-                <label className="shrink-0 cursor-pointer bg-[rgba(28,28,25,0.06)] hover:bg-[rgba(28,28,25,0.1)] transition-colors px-3 h-7 rounded-md flex items-center font-sans font-medium text-sm text-[#1c1c19] tracking-[-0.02em]">
-                  찾아보기
-                  <input
-                    ref={fileRef}
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={(e) => setFileName(e.target.files?.[0]?.name ?? "")}
-                  />
-                </label>
-              </div>
-            </Field>
 
             {status === "success" && (
               <p className="text-center font-sans font-medium text-base text-green-600 tracking-[-0.02em]">
@@ -254,9 +223,14 @@ export default function SectionContact() {
         </div>
 
         {/* Footer note */}
-        <p className="font-sans font-medium text-base text-[rgba(28,28,25,0.32)] tracking-[-0.03em] leading-[1.4] text-center">
-          케이스 정보(보철 종류/환자 상태 요약/희망 납기/쉐이드/참고사진)가 있으면 더 빠르게 답변드릴 수 있어요.
-        </p>
+        <div className="flex flex-col gap-1 items-center text-center">
+          <p className="font-sans font-medium text-base text-[rgba(28,28,25,0.32)] tracking-[-0.03em] leading-[1.4]">
+            케이스 정보(보철 종류/환자 상태 요약/희망 납기/쉐이드/참고사진)가 있으면 더 빠르게 답변드릴 수 있어요.
+          </p>
+          <a href="mailto:kangdoc80@naver.com" className="font-sans font-medium text-base text-[rgba(28,28,25,0.32)] tracking-[-0.03em] leading-[1.4] hover:text-[#1c1c19] transition-colors">
+            kangdoc80@naver.com
+          </a>
+        </div>
 
       </div>
     </section>
