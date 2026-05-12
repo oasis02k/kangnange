@@ -70,7 +70,10 @@ export default function SectionWorkflow() {
   /* mobile slider refs */
   const containerRef = useRef<HTMLDivElement>(null);
   const trackRef     = useRef<HTMLDivElement>(null);
+  const cardRef      = useRef<HTMLDivElement>(null);
   const touchStartX  = useRef(0);
+
+  const slideWidth = () => cardRef.current ? cardRef.current.offsetWidth : 0;
 
   /* ── auto-rotate ─────────────────────────────── */
   const startAutoPlay = useCallback(() => {
@@ -115,13 +118,13 @@ export default function SectionWorkflow() {
 
   /* ── mobile: GSAP slide on active change ─────── */
   useEffect(() => {
-    if (!trackRef.current || !containerRef.current) return;
+    if (!trackRef.current) return;
     gsap.to(trackRef.current, {
-      x: -active * containerRef.current.offsetWidth,
+      x: -active * slideWidth(),
       duration: 0.5,
       ease: "power3.inOut",
     });
-  }, [active]);
+  }, [active]); // eslint-disable-line react-hooks/exhaustive-deps
 
   /* ── touch handlers ──────────────────────────── */
   const onTouchStart = (e: React.TouchEvent) => {
@@ -131,10 +134,8 @@ export default function SectionWorkflow() {
   };
 
   const onTouchMove = (e: React.TouchEvent) => {
-    if (!containerRef.current) return;
     const dx = e.touches[0].clientX - touchStartX.current;
-    const base = -active * containerRef.current.offsetWidth;
-    gsap.set(trackRef.current, { x: base + dx });
+    gsap.set(trackRef.current, { x: -active * slideWidth() + dx });
   };
 
   const onTouchEnd = (e: React.TouchEvent) => {
@@ -148,8 +149,7 @@ export default function SectionWorkflow() {
     if (next !== active) {
       setActive(next);
     } else {
-      const cw = containerRef.current!.offsetWidth;
-      gsap.to(trackRef.current, { x: -active * cw, duration: 0.3, ease: "power2.out" });
+      gsap.to(trackRef.current, { x: -active * slideWidth(), duration: 0.3, ease: "power2.out" });
     }
 
     startAutoPlay();
@@ -293,7 +293,7 @@ export default function SectionWorkflow() {
           >
             <div ref={trackRef} className="flex">
               {STEPS.map((step, i) => (
-                <div key={step.step} className="min-w-full flex flex-col gap-4">
+                <div key={step.step} ref={i === 0 ? cardRef : undefined} className="grow-0 shrink-0 basis-full max-w-[380px] flex flex-col gap-4">
                   <span className="self-start inline-flex items-center justify-center px-4 py-2 rounded-lg font-sans font-medium text-base text-[#1c1c19] tracking-[-0.03em] leading-[1.4] whitespace-nowrap bg-[#ecc744]">
                     Step {step.step}
                   </span>
