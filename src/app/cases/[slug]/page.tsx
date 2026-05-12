@@ -1,5 +1,6 @@
 export const revalidate = 0;
 
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { client } from "../../../sanity/client";
 import Navbar from "../../components/Navbar";
@@ -17,6 +18,19 @@ const CASE_QUERY = `*[_type == "case" && slug.current == $slug][0] {
 }`;
 
 const SLUGS_QUERY = `*[_type == "case"]{ "slug": slug.current }`;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  return {
+    alternates: {
+      canonical: `https://www.kangnange.com/cases/${slug}/`,
+    },
+  };
+}
 
 export async function generateStaticParams() {
   const items = await client.fetch(SLUGS_QUERY);
