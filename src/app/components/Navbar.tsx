@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import gsap from "gsap";
 
@@ -99,17 +99,23 @@ export function CTAButton({
 
 export default function Navbar() {
   const pathname = usePathname();
-  const bar1      = useRef<HTMLSpanElement>(null);
-  const bar2      = useRef<HTMLSpanElement>(null);
-  const bar3      = useRef<HTMLSpanElement>(null);
-  const menuRef   = useRef<HTMLDivElement>(null);
-  const burgerRef = useRef<HTMLButtonElement>(null);
-  const isOpen    = useRef(false);
+  const bar1    = useRef<HTMLSpanElement>(null);
+  const bar2    = useRef<HTMLSpanElement>(null);
+  const bar3    = useRef<HTMLSpanElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const isOpen  = useRef(false);
+
+  // JS-based mobile detection — runs after mount so it's always accurate
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   const openMenu = () => {
-    if (isOpen.current) return;
-    // Only open if the hamburger button is actually visible in the DOM
-    if (!burgerRef.current || burgerRef.current.offsetParent === null) return;
+    if (isOpen.current || !isMobile) return;
     isOpen.current = true;
     gsap.to(bar1.current, { y: 8,  rotate: 45,  duration: 0.35, ease: "power2.inOut" });
     gsap.to(bar2.current, { opacity: 0, scaleX: 0, duration: 0.2 });
@@ -152,8 +158,9 @@ export default function Navbar() {
           </button>
         </div>
         <nav className="flex flex-col gap-8 font-sans font-medium text-2xl text-white tracking-[-0.03em]">
-          <a href="/"      onClick={closeMenu} className="menu-item hover:text-[#ecc744] transition-colors duration-200">Home</a>
-          <a href="/cases" onClick={closeMenu} className="menu-item hover:text-[#ecc744] transition-colors duration-200">제작 케이스</a>
+          {/* Navigation links: no closeMenu — page reload resets menu state */}
+          <a href="/" className="menu-item hover:text-[#ecc744] transition-colors duration-200">Home</a>
+          <a href="/cases" className="menu-item hover:text-[#ecc744] transition-colors duration-200">제작 케이스</a>
           <a
             href="#"
             onClick={(e) => {
@@ -176,7 +183,7 @@ export default function Navbar() {
           >기공장비</a>
         </nav>
         <div className="mt-auto menu-item">
-          <a href="/contact?inquiry=비즈니스 제휴 문의" onClick={closeMenu} className="w-full">
+          <a href="/contact?inquiry=비즈니스 제휴 문의" className="w-full">
             <SecondaryButton className="w-full h-12">비즈니스 제휴 문의</SecondaryButton>
           </a>
         </div>
@@ -213,17 +220,18 @@ export default function Navbar() {
               <SecondaryButton className="w-full h-12">비즈니스 제휴 문의</SecondaryButton>
             </a>
           </div>
-          <button
-            ref={burgerRef}
-            onClick={openMenu}
-            className="md:hidden w-6 h-6 flex flex-col justify-between py-[3px] relative z-[60] cursor-pointer"
-            style={{ touchAction: "manipulation" }}
-            aria-label="메뉴 열기"
-          >
-            <span ref={bar1} className="block w-full h-[1.5px] bg-white rounded-full" />
-            <span ref={bar2} className="block w-full h-[1.5px] bg-white rounded-full" />
-            <span ref={bar3} className="block w-full h-[1.5px] bg-white rounded-full" />
-          </button>
+          {isMobile && (
+            <button
+              onClick={openMenu}
+              className="w-6 h-6 flex flex-col justify-between py-[3px] relative z-[60] cursor-pointer"
+              style={{ touchAction: "manipulation" }}
+              aria-label="메뉴 열기"
+            >
+              <span ref={bar1} className="block w-full h-[1.5px] bg-white rounded-full" />
+              <span ref={bar2} className="block w-full h-[1.5px] bg-white rounded-full" />
+              <span ref={bar3} className="block w-full h-[1.5px] bg-white rounded-full" />
+            </button>
+          )}
         </div>
       </header>
     </>
