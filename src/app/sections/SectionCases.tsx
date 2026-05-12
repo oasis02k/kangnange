@@ -251,7 +251,7 @@ export default function SectionCases() {
                 <div
                   key={c.title}
                   ref={i === 0 ? cardRef : undefined}
-                  className="min-w-full tablet:min-w-[60%] flex flex-col"
+                  className="min-w-full tablet:min-w-[446px] flex flex-col"
                 >
                   <CaseCard {...c} />
                 </div>
