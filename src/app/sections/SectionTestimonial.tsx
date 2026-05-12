@@ -170,7 +170,7 @@ export default function SectionTestimonial() {
                 <div
                   key={review.name}
                   ref={i === 0 ? cardRef : undefined}
-                  className="min-w-full tablet:min-w-[60%] flex flex-col"
+                  className="grow-0 shrink-0 basis-full max-w-[446px] flex flex-col"
                 >
                   <ReviewCard review={review} />
                 </div>
