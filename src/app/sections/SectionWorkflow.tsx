@@ -293,7 +293,7 @@ export default function SectionWorkflow() {
           >
             <div ref={trackRef} className="flex">
               {STEPS.map((step, i) => (
-                <div key={step.step} className="min-w-full flex flex-col gap-4">
+                <div key={step.step} className="grow-0 shrink-0 basis-full max-w-[373px] flex flex-col gap-4">
                   <span className="self-start inline-flex items-center justify-center px-4 py-2 rounded-lg font-sans font-medium text-base text-[#1c1c19] tracking-[-0.03em] leading-[1.4] whitespace-nowrap bg-[#ecc744]">
                     Step {step.step}
                   </span>
