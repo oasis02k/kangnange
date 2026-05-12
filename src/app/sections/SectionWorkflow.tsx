@@ -45,7 +45,7 @@ function FlowPill() {
   }, []);
 
   return (
-    <div className="bg-[#f0f0f0] tablet:bg-[#ecc744] flex items-center justify-center gap-6 tablet:gap-12 px-6 tablet:px-12 py-4 tablet:py-6 rounded-full w-full tablet:w-auto">
+    <div className="bg-[#f0f0f0] flex items-center justify-center gap-6 tablet:gap-12 px-6 tablet:px-12 py-4 tablet:py-6 rounded-full w-full tablet:w-auto">
       <span className="font-sans font-medium text-[20px] tablet:text-[32px] text-[#1c1c19] tracking-[-0.03em] leading-[1.2]">의뢰</span>
       <span ref={a1} className="font-sans font-bold text-2xl text-[#1c1c19] leading-[1.2]">→</span>
       <span className="font-sans font-medium text-[20px] tablet:text-[32px] text-[#1c1c19] tracking-[-0.03em] leading-[1.2]">제작</span>
