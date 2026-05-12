@@ -67,8 +67,30 @@ export default function SectionWhy() {
 
     const mm = gsap.matchMedia();
 
-    mm.add("(min-width: 810px)", () => {
+    mm.add("(min-width: 810px) and (max-width: 1023px)", () => {
       const words = sectionRef.current!.querySelectorAll("[data-tablet-word]");
+      gsap.fromTo(
+        words,
+        { color: "rgba(255,255,255,0.15)" },
+        {
+          color: "rgba(255,255,255,1)",
+          stagger: 0.1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: "+=2500",
+            pin: true,
+            scrub: 1,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          },
+        }
+      );
+    });
+
+    mm.add("(min-width: 1024px)", () => {
+      const words = sectionRef.current!.querySelectorAll("[data-desktop-word]");
       gsap.fromTo(
         words,
         { color: "rgba(255,255,255,0.15)" },
@@ -127,8 +149,13 @@ export default function SectionWhy() {
           Why 강냉이.com
         </h2>
 
-        {/* Tablet + Desktop */}
-        <p className="hidden tablet:block font-sans font-medium text-[32px] leading-[1.6] tracking-[-0.03em] w-full">
+        {/* Desktop */}
+        <p className="hidden lg:block font-sans font-medium text-[32px] leading-[1.6] tracking-[-0.03em] w-full">
+          {buildWordSpans(DESKTOP_LINES, "data-desktop-word")}
+        </p>
+
+        {/* Tablet */}
+        <p className="hidden tablet:block lg:hidden font-sans font-medium text-[32px] leading-[1.6] tracking-[-0.03em] w-full">
           {buildWordSpans(TABLET_LINES, "data-tablet-word")}
         </p>
 
