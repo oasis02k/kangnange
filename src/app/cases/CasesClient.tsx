@@ -17,12 +17,12 @@ export type SanityCase = {
 function CaseCard({ item }: { item: SanityCase }) {
   return (
     <a href={`/cases/${item.slug}`} className="flex flex-col relative bg-white rounded-2xl overflow-hidden group">
-      <div className="relative w-full aspect-[658/351] overflow-hidden bg-[#e8e8e6] rounded-b-2xl">
+      <div className="relative w-full aspect-[658/351] overflow-hidden bg-black rounded-b-2xl">
         {item.image && (
           <img
             src={item.image}
             alt={item.title}
-            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+            className="absolute inset-0 w-full h-full object-contain"
           />
         )}
         <span className="absolute top-2 left-2 bg-[#ecc744] text-[#1c1c19] font-sans font-medium text-[14px] tracking-[-0.03em] leading-[1.2] px-3 h-8 flex items-center rounded-lg">
