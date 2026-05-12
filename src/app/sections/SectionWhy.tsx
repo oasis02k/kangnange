@@ -59,8 +59,11 @@ export default function SectionWhy() {
     gsap.registerPlugin(ScrollTrigger);
 
     const onRefreshInit = () => {
-      if (sectionRef.current) {
-        gsap.set(sectionRef.current, { clearProps: "width" });
+      if (!sectionRef.current) return;
+      gsap.set(sectionRef.current, { clearProps: "width" });
+      const parent = sectionRef.current.parentElement;
+      if (parent?.classList.contains("pin-spacer")) {
+        gsap.set(parent, { clearProps: "width" });
       }
     };
     ScrollTrigger.addEventListener("refreshInit", onRefreshInit);
