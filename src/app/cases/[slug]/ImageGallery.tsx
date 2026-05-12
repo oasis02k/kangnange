@@ -9,11 +9,11 @@ export default function ImageGallery({ images }: { images: string[] }) {
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden bg-black">
+      <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden">
         <img
           src={images[active]}
           alt=""
-          className="absolute inset-0 w-full h-full object-contain transition-opacity duration-300"
+          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300"
         />
       </div>
 
@@ -23,13 +23,13 @@ export default function ImageGallery({ images }: { images: string[] }) {
             <button
               key={i}
               onClick={() => setActive(i)}
-              className={`relative aspect-[16/9] rounded-xl overflow-hidden bg-black ring-2 transition-all duration-200 cursor-pointer ${
+              className={`relative aspect-[16/9] rounded-xl overflow-hidden ring-2 transition-all duration-200 cursor-pointer ${
                 i === active
                   ? "ring-[#ecc744]"
                   : "ring-transparent hover:ring-[rgba(28,28,25,0.2)]"
               }`}
             >
-              <img src={img} alt="" className="absolute inset-0 w-full h-full object-contain" />
+              <img src={img} alt="" className="absolute inset-0 w-full h-full object-cover" />
             </button>
           ))}
         </div>
