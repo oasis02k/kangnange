@@ -232,13 +232,13 @@ export default function SectionCases() {
           </p>
         </div>
 
-        {/* Desktop: row */}
-        <div className="hidden lg:flex items-stretch gap-6 w-full">
+        {/* Tablet + Desktop: row */}
+        <div className="hidden tablet:flex items-stretch gap-6 w-full">
           {CASES.map((c) => <CaseCard key={c.title} {...c} />)}
         </div>
 
-        {/* Mobile + Tablet: swipeable slider */}
-        <div className="lg:hidden w-full flex flex-col gap-4">
+        {/* Mobile: swipeable slider */}
+        <div className="tablet:hidden w-full flex flex-col gap-4">
           <div
             ref={containerRef}
             className="w-full overflow-hidden"
