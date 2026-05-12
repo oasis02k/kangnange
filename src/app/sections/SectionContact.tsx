@@ -147,20 +147,6 @@ export default function SectionContact() {
               </div>
             </Field>
 
-            {inquiry === "케이스 의뢰하기" && (
-              <div className="flex flex-col gap-1 bg-[#f5f5f5] rounded-xl px-4 py-3">
-                <p className="font-sans font-medium text-sm text-[#1c1c19] tracking-[-0.03em] leading-[1.5]">
-                  케이스 정보(보철 종류/환자 상태 요약/희망 납기/쉐이드/참고사진)가 있으면 더 빠르게 답변드릴 수 있어요.
-                </p>
-                <p className="font-sans font-medium text-sm text-[#1c1c19] tracking-[-0.03em] leading-[1.5]">
-                  보내실 곳{" "}
-                  <a href="mailto:kangdoc80@naver.com" className="hover:opacity-70 transition-opacity">
-                    kangdoc80@naver.com
-                  </a>
-                </p>
-              </div>
-            )}
-
             <Field label="치과명" required>
               <input
                 type="text"
