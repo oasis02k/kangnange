@@ -1,9 +1,7 @@
 "use client";
 
-import { useState, useRef, useLayoutEffect, useEffect, useCallback } from "react";
+import { useRef, useLayoutEffect } from "react";
 import gsap from "gsap";
-
-const INTERVAL_MS = 3000;
 
 const CASES = [
   {
@@ -164,60 +162,6 @@ function CasesLink() {
 }
 
 export default function SectionCases() {
-  const [active, setActive]  = useState(0);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const trackRef     = useRef<HTMLDivElement>(null);
-  const cardRef      = useRef<HTMLDivElement>(null);
-  const touchStartX  = useRef(0);
-  const isPaused     = useRef(false);
-  const intervalRef  = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const slideWidth = () => {
-    if (!cardRef.current) return 0;
-    const gap = window.innerWidth >= 810 ? 24 : 16;
-    return cardRef.current.offsetWidth + gap;
-  };
-
-  const snapTo = (index: number) => {
-    gsap.to(trackRef.current, { x: -index * slideWidth(), duration: 0.45, ease: "power3.inOut" });
-    setActive(index);
-  };
-
-  const startAutoPlay = useCallback(() => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
-    intervalRef.current = setInterval(() => {
-      if (!isPaused.current)
-        setActive(prev => (prev + 1) % CASES.length);
-    }, INTERVAL_MS);
-  }, []);
-
-  useEffect(() => {
-    startAutoPlay();
-    return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
-  }, [startAutoPlay]);
-
-  useEffect(() => {
-    gsap.to(trackRef.current, { x: -active * slideWidth(), duration: 0.45, ease: "power3.inOut" });
-  }, [active]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const onTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-    isPaused.current = true;
-    gsap.killTweensOf(trackRef.current);
-  };
-  const onTouchMove = (e: React.TouchEvent) => {
-    const dx = e.touches[0].clientX - touchStartX.current;
-    gsap.set(trackRef.current, { x: -active * slideWidth() + dx });
-  };
-  const onTouchEnd = (e: React.TouchEvent) => {
-    const dx = e.changedTouches[0].clientX - touchStartX.current;
-    isPaused.current = false;
-    if (dx < -50) snapTo(Math.min(active + 1, CASES.length - 1));
-    else if (dx > 50) snapTo(Math.max(active - 1, 0));
-    else snapTo(active);
-    startAutoPlay();
-  };
-
   return (
     <section id="cases" className="bg-white py-8 tablet:py-24 px-5 tablet:px-8">
       <div className="flex flex-col gap-6 tablet:gap-12 items-center w-full max-w-[1440px] mx-auto">
@@ -232,45 +176,9 @@ export default function SectionCases() {
           </p>
         </div>
 
-        {/* Desktop: row */}
-        <div className="hidden tablet:flex items-stretch gap-4 w-full">
+        {/* Cards: row on tablet+, stacked on mobile */}
+        <div className="flex flex-col tablet:flex-row items-stretch gap-4 w-full">
           {CASES.map((c) => <CaseCard key={c.title} {...c} />)}
-        </div>
-
-        {/* Mobile: swipeable slider */}
-        <div className="tablet:hidden w-full flex flex-col gap-4">
-          <div
-            ref={containerRef}
-            className="w-full overflow-hidden"
-            onTouchStart={onTouchStart}
-            onTouchMove={onTouchMove}
-            onTouchEnd={onTouchEnd}
-          >
-            <div ref={trackRef} className="flex items-stretch gap-4 tablet:gap-6">
-              {CASES.map((c, i) => (
-                <div
-                  key={c.title}
-                  ref={i === 0 ? cardRef : undefined}
-                  className="grow-0 shrink-0 basis-full max-w-[446px] flex flex-col"
-                >
-                  <CaseCard {...c} />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Dot indicators */}
-          <div className="flex justify-center items-center gap-2">
-            {CASES.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => { snapTo(i); startAutoPlay(); }}
-                className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                  active === i ? "w-5 bg-[#1c1c19]" : "w-1.5 bg-[rgba(28,28,25,0.2)]"
-                }`}
-              />
-            ))}
-          </div>
         </div>
 
         {/* CTA */}
