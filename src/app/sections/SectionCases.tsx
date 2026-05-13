@@ -93,7 +93,7 @@ function CaseCard({
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
-        className="relative h-40 tablet:h-auto tablet:aspect-[770/410] tablet:min-h-[240px] overflow-hidden shrink-0 select-none cursor-ew-resize"
+        className="relative aspect-[770/410] overflow-hidden shrink-0 select-none cursor-ew-resize"
       >
         <img src={before} alt="Before" className="absolute inset-0 w-full h-full object-cover pointer-events-none" />
         <img
@@ -127,8 +127,8 @@ function CaseCard({
       </div>
 
       {/* Text */}
-      <div className="bg-[#f5f5f5] flex flex-col gap-4 p-4 tablet:p-6 flex-1">
-        <h3 className="font-sans font-bold text-base tablet:text-2xl text-[#1c1c19] tracking-[-0.03em] leading-[1.2]">
+      <div className="bg-[#f5f5f5] flex flex-col gap-4 p-4 flex-1">
+        <h3 className="font-sans font-bold text-[18px] text-[#1c1c19] tracking-[-0.03em] leading-[1.2]">
           {title}
         </h3>
         <p className="font-sans font-normal text-base tablet:text-[18px] text-[rgba(28,28,25,0.56)] tracking-[-0.03em] leading-[1.4]">
@@ -233,12 +233,12 @@ export default function SectionCases() {
         </div>
 
         {/* Desktop: row */}
-        <div className="hidden lg:flex items-stretch gap-6 w-full">
+        <div className="hidden tablet:flex items-stretch gap-4 w-full">
           {CASES.map((c) => <CaseCard key={c.title} {...c} />)}
         </div>
 
-        {/* Mobile + Tablet: swipeable slider */}
-        <div className="lg:hidden w-full flex flex-col gap-4">
+        {/* Mobile: swipeable slider */}
+        <div className="tablet:hidden w-full flex flex-col gap-4">
           <div
             ref={containerRef}
             className="w-full overflow-hidden"
